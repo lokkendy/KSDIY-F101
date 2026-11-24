@@ -1,0 +1,150 @@
+﻿Comment,Designator,Footprint,LCSC Part #,Quantity,Manufacturer,Manufacturer Part,Value,Tolerance,Voltage Rating,Description,Source Notes
+22uF,"C1,C11,C36,C37,C39,C40,C42,C43,C93",0603-C,,9,,,,,,Capacitor,LCSC part number not present in source
+1nF,"C2,C6",CAP_0402 - G,,2,,,,,,Capacitor,LCSC part number not present in source
+0.1uF,"C3,C7,C10",CAP_0402 - G,,3,,,,,,Capacitor,LCSC part number not present in source
+2.2uF,"C4,C38,C41,C44,C46,C49,C52,C91",CAP_0402 - G,,8,,,,,,Capacitor,LCSC part number not present in source
+NC,"C5,C53",CAP_0402 - G,,2,,,NC,,,,Source Comment is NC; assembly intent not changed; LCSC part number not present in source
+20pF,"C8,C9",CAP_0402 - G,,2,,,,,,Capacitor,LCSC part number not present in source
+220nF,C12,CAP_0402 - G,,1,,,,,,Capacitor,LCSC part number not present in source
+100nF,"C13,C78,C79,C102,C103",CAP_0402 - G,,5,,,100nF,,,,LCSC part number not present in source
+22uF,C45,0603-C,,1,,,,,,,LCSC part number not present in source
+2.2uF,"C47,C48,C61,C67,C68",CAP_0402 - G,C12530,5,SAMSUNG(三星),CL05A225MQ5NSNC,2.2uF,±20%,6.3V,容值:2.2uF;精度:±20%;额定电压:6.3V;温度系数:X5R;,
+1nF,C51,CAP_0402 - G,,1,,,103,,,Cap SMD,LCSC part number not present in source
+22pF,"C54,C55",CAP_0402 - G,,2,,,,,,,LCSC part number not present in source
+0.1uF,"C60,C84,C94",CAP_0402 - G,,3,,,,,,,LCSC part number not present in source
+1uF,"C62,C69,C72",CAP_0402 - G,C52923,3,SAMSUNG(三星),CL05A105KA5NQNC,1uF,±10%,25V,容值:1uF;精度:±10%;额定电压:25V;温度系数:X5R;,
+10uF,C63,CAP_0402 - G,C15525,1,SAMSUNG(三星),CL05A106MQ5NUNC,10uF,±20%,6.3V,容值:10uF;精度:±20%;额定电压:6.3V;温度系数:X5R;,
+50V 10uF,C64,1206-C,,1,,,,,,Capacitor,LCSC part number not present in source
+100nF,"C65,C73,C74,C75,C76,C77",CAP_0402 - G,C1525,6,SAMSUNG(三星),CL05B104KO5NNNC,100nF,±10%,16V,容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;,
+22uF,C66,0603-C,C59461,1,SAMSUNG(三星),CL10A226MQ8NRNC,22uF,±20%,6.3V,容值:22uF;精度:±20%;额定电压:6.3V;温度系数:X5R;,
+10uF,"C70,C71",0603-C,,2,,,,,,Capacitor,LCSC part number not present in source
+10uF,"C80,C111",CAP_0402 - G,,2,,,10uF,,,,LCSC part number not present in source
+1uF,C95,CAP_0402 - G,,1,,,,,,,LCSC part number not present in source
+1uF,"C104,C105,C110,C113",CAP_0402 - G,,4,,,1uF,,,,LCSC part number not present in source
+H5VND5B,"D1,D3,D4,D5,D12,D19,D110,D111,D112,D113",SOD-523F_L1.7-W0.9-LS1.7-BI,,10,,,,,,ESD二极管-单向,LCSC part number not present in source
+Red,D2,0603/1608-LED,,1,,,,,,LED,LCSC part number not present in source
+NC,"D6,D7,D8,D9",SOD-523F_L1.7-W0.9-LS1.7-BI,,4,,,,,,ESD二极管-单向,Source Comment is NC; assembly intent not changed; LCSC part number not present in source
+DSK24,D11,SOD-123F,,1,,,,,,,LCSC part number not present in source
+1N5819WS,D100,SOD-323_L1.8-W1.3-LS2.5-RD,,1,,,,,,"电压:40V 电流:1A
+正向压降(Vf):600mV@1A
+直流反向耐压(Vr):40V
+整流电流:1A
+型号:1N5819WS_C191023
+LCSC C191023
+厂牌:Hottech(合科泰)",LCSC part number not present in source
+LSM6DS3TR-C,IC1,LGA-14(2.5X3X0.86),,1,STMicroelectronics,LSM6DS3TR-C,,,,Integrated Circuit,LCSC part number not present in source
+2.4G,IPEX1,SMA_IPEX,,1,,,,,,SMA-板载2.4G射频天线https://item.szlcsc.com/3441431.html?fromZone=s_s__%2522ipex1%2522,LCSC part number not present in source
+MX1.25-2P,"J1,J2",MX 1.25-WS-2P,,2,,,,,,"Header, 4-Pin",LCSC part number not present in source
+USB type C,"J3,J10",USB Type-C-16Pin_A,,2,,,,,,,LCSC part number not present in source
+TF-CARD H1.8,J4,TF卡座,,1,,,,,,TF卡座,LCSC part number not present in source
+FPC1.0-30P,JP2,FPC0.5 2H-WS-30P,,1,,,,,,FPC连接器,LCSC part number not present in source
+WPN201610M1R0MT,"L1,L3",IND_CB2518_MM,,2,,,,,,贴片功率电感 2.2uH-20%-252010(2.5*2.0*1.0mm),LCSC part number not present in source
+FTC252012S100MBCA,L2,IND_CB2518_MM,,1,,,,,,FTC252012S100MBCA,LCSC part number not present in source
+AO3401A,Q10,SOT-23_L2.9-W1.3-P1.90-LS2.4-BR,,1,,,,,,"1个P沟道 耐压:30V 电流:4A
+数量:1个P沟道
+漏源电压(Vdss):30V
+连续漏极电流(Id):4A
+导通电阻(RDS(on)):47mΩ@10V；85mΩ@2.5V；60mΩ@4.5V
+耗散功率(Pd):-
+阈值电压(Vgs(th)):900mV
+型号:AO3401A_C15127
+LCSC C15127
+厂牌:AOS",LCSC part number not present in source
+2N7002,Q11,SOT-23_L2.9-W1.3-P1.90-LS2.4-BR,,1,,,,,,"1个N沟道 耐压:60V 电流:300mA
+数量:1个N沟道
+漏源电压(Vdss):60V
+连续漏极电流(Id):300mA
+导通电阻(RDS(on)):5Ω@10V
+耗散功率(Pd):830mW
+阈值电压(Vgs(th)):2.5V
+型号:2N7002,215
+LCSC C65189
+厂牌:Nexperia(安世)",LCSC part number not present in source
+20K,R1,RES_0402 -G,,1,,,,,,Resistor,LCSC part number not present in source
+10K,"R2,R3,R70",RES_0402 -G,,3,,,,,,普通电阻,LCSC part number not present in source
+10K,"R4,R15,R39",RES_0402 -G,,3,,,,,,Resistor,LCSC part number not present in source
+33R,"R5,R17",RES_0402 -G,,2,,,,,,普通电阻,LCSC part number not present in source
+0R,R6,RES_0402 -G,,1,,,,,,普通电阻,LCSC part number not present in source
+10K,"R7,R105",RES_0402 -G,,2,,,10K,,,,LCSC part number not present in source
+10K,R8,RES_0402 -G,,1,,,3.3K,,,,LCSC part number not present in source
+0R,R11,RES_0402 -G,,1,,,,,,Resistor,LCSC part number not present in source
+SDNT1005X103F3950FTF,R12,RES_0402 -G,,1,,,,,,10K 热敏电阻,LCSC part number not present in source
+1K,R13,RES_0402 -G,,1,,,,,,Resistor,LCSC part number not present in source
+510R,R14,RES_0402 -G,,1,,,,,,普通电阻,LCSC part number not present in source
+0R,"R16,R106",RES_0402 -G,,2,,,0R,,,,LCSC part number not present in source
+5.1K,"R20,R21",RES_0402 -G,,2,,,,,,普通电阻,LCSC part number not present in source
+51K,"R23,R24,R25,R26,R27",RES_0402 -G,,5,,,,,,普通电阻,LCSC part number not present in source
+5.1R,R38,0603-R,,1,,,,,,Resistor,LCSC part number not present in source
+2.2K,"R47,R48",RES_0402 -G,,2,,,,,,普通电阻,LCSC part number not present in source
+5.1K,"R100,R101",RES_0402 -G,,2,,,5.1K,,,,LCSC part number not present in source
+100K,"R104,R120,R121",RES_0402 -G,,3,,,100K,,,,LCSC part number not present in source
+NC,"R107,R108",RES_0402 -G,,2,,,NC,,,,Source Comment is NC; assembly intent not changed; LCSC part number not present in source
+33R,"R110,R111",RES_0402 -G,,2,,,33R,,,,LCSC part number not present in source
+100R,"R112,R113",RES_0402 -G,,2,,,100R,,,,LCSC part number not present in source
+4.7K,"R117,R118",RES_0402 -G,,2,,,4.7K,,,,LCSC part number not present in source
+TSA020A3418A,"SW1,SW2,SW3,SW4",SW-SMD_TSA020,,4,,,,,,"4*5*3.4H-J 180gf 笑脸PPA
+电路结构:单刀单掷
+按钮形状:圆形按钮
+作用力:1.8N
+安装方式:卧贴
+开关长度:4.5mm
+开关宽度:3.4mm
+开关高度:3.4mm
+带支架:带支架
+触点电流:50mA
+额定电压:12V
+带灯:无
+工作寿命:-
+型号:TSA020A3418A
+LCSC C2888437
+厂牌:BZCN(博众电气)",LCSC part number not present in source
+NS4150B,U1,MSOP8_N,,1,,,,,,,LCSC part number not present in source
+W25Q128JV,U2,SOP8W,,1,,,,,,,LCSC part number not present in source
+HX PM2.54-1x8P WT,U3,HDR-SMD_8P-P2.54-H-F-W8.5,,1,,,,,,"配套排针：HX PZ2.54-1x8P系列 1x8P 间距:2.54mm 卧贴
+插孔结构:1x8P
+间距:2.54mm
+行距:-
+圆孔/方孔:方孔
+安装方式:卧贴
+排数:单排
+总孔位数:8P
+额定电流:3A
+额定电压:1kV
+插孔方向:顶部
+塑高:8.5mm
+触头材质:黄铜
+触头镀层:金
+工作温度:-40℃~+105℃
+型号:HX PM2.54-1x8P WT
+LCSC C46061772
+厂牌:hanxia(韩下)",LCSC part number not present in source
+AXP2101,U4,QFN-40_L5.0-W5.0-P0.40-TL-EP3.4,C3036461,1,x-powers,AXP2101,,,,A PMU designed by Allwinner,
+,U5,QFN-68_L7.0-W7.0-P0.35-TL-EP4.5,,1,,,,,,,Source Comment is empty; LCSC part number not present in source
+,U6,WIRELM-SMD_BL-M8800MT1-40B,,1,,,AIC8800D80,,,"AIC8800D80 SDIO WiFi/BT module, LGA-44. Symbol from YuzukiNeko baseboard U3; footprint from BL-M8800MT1-40B - verify against module datasheet",Source Comment is empty; LCSC part number not present in source
+SY7200,U8,SOT-23-6,,1,,,,,,,LCSC part number not present in source
+CH340E,U10,MSOP-10_CH340E,,1,,,,,,"USB转串口芯片CH340
+应用功能:收发器
+USB协议版本:USB 2.0
+数据速率:2Mbps
+型号:CH340E
+LCSC C99652
+厂牌:WCH(南京沁恒)",LCSC part number not present in source
+ICS-43434,U13,MIC-SMD_6P-L3.5-W2.7-P0.90-BL,,1,,,,,,"1.65V~3.63V 停产
+指向性:全指向
+信噪比:64dB
+灵敏度:-26dB
+阻抗:-
+型号:ICS-43434_C5656610
+LCSC C5656610
+厂牌:TDK InvenSense(应美盛)",LCSC part number not present in source
+ME6211C12M5G-N,U15,SOT-23-5_ME6211,,1,,,,,,"1.2V 300mA 6V
+输出极性:正极
+工作电压:6V
+输出电压:1.2V
+输出电流:300mA
+电源纹波抑制比(PSRR):70dB@(1kHz)
+输出类型:固定
+型号:ME6211C12M5G-N
+LCSC C236672
+厂牌:MICRONE(南京微盟)",LCSC part number not present in source
+SX2B40.000F1510F30,Y1,XTAL-2520,,1,,,,,,24Mhz,LCSC part number not present in source

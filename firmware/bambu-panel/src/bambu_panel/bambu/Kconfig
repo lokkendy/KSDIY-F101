@@ -1,0 +1,52 @@
+menu "KSDIY Bambu LAN"
+
+    config BAMBU_PUSHALL_MIN_INTERVAL_MS
+        int "pushall 最短间隔下限 (ms，未知机型回退)"
+        default 300000
+        help
+            各机型在应用内另有推荐值；手动 pushall 取 max(机型, 本项)。
+            连接成功时仍会自动 pushall 一次。
+
+    config BAMBU_MQTT_PORT
+        int "LAN MQTT TLS port"
+        default 8883
+
+    config BAMBU_MQTT_BUFFER_SIZE
+        int "MQTT inbound buffer (bytes)"
+        default 49152
+
+    config BAMBU_CAMERA_TCP_PORT
+        int "LAN camera TCP/TLS port (JPEG stream)"
+        default 6000
+        help
+            P1 / A1 系列 LAN 摄像头协议（OpenBambuAPI video.md）。
+
+    config BAMBU_CAMERA_FRAME_MAX
+        int "Max JPEG frame bytes (PSRAM)"
+        default 262144
+
+    config BAMBU_FTP_PORT
+        int "LAN FTPS port (implicit TLS)"
+        default 990
+
+    config BAMBU_FTP_TLS_TIMEOUT_MS
+        int "FTPS TLS connect timeout (ms)"
+        default 45000
+        help
+            MQTT 长连接占用打印机时，第二条 TLS（990）握手可能较慢。
+
+    config BAMBU_FTP_LIST_MAX
+        int "Max files per FTPS list"
+        default 64
+        help
+            与 Files 页堆分配 pack(条目数组 inline)配套: 64≈4.6KB/次加载。
+
+    config BAMBU_LAN_TLS_INSECURE
+        bool "LAN: skip TLS server verification (Developer Mode)"
+        default y
+        help
+            拓竹 LAN MQTT 使用打印机自签证书。开发阶段可跳过校验；
+            生产环境建议后续接入 Bambu CA + 序列号 SNI。
+            IDF 6.x 还须应用 sdkconfig 中 CONFIG_ESP_TLS_SKIP_SERVER_CERT_VERIFY=y。
+
+endmenu

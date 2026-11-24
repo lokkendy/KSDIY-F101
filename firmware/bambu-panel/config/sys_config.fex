@@ -1,0 +1,1141 @@
+;sunxi platform application
+;---------------------------------------------------------------------------------------------------------
+; 说明： 脚本中的字符串区分大小写，用户可以修改"="后面的数值，但是不要修改前面的字符串
+; 描述gpio的形式：Port:端口+组内序号<功能分配><内部电阻状态><驱动能力><输出电平状态>
+;---------------------------------------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------------
+; version:版本1.00
+; machine:板级文件名
+;---------------------------------------------------------------------------------
+[product]
+version = "1"
+machine = "evb"
+
+;----------------------------------------------------------------------------------
+;debug_mode     = 0-close printf, > 0-open printf
+;----------------------------------------------------------------------------------
+[platform]
+debug_mode  = 1
+
+;----------------------------------------------------------------------------------
+;storage_type   = boot medium, 0-nand, 1-sd, 2-emmc, 3-nor, 4-emmc3, 5-spinand -1(defualt)auto scan
+;----------------------------------------------------------------------------------
+[target]
+storage_type    = 3
+
+[spinor_para]
+;read_mode           =4
+;flash_size          =16
+;delay_cycle         =1
+;frequency           =100000000
+
+spi0_sclk           = port:PC00<3><0><2><default>
+spi0_cs             = port:PC01<3><1><2><default>
+spi0_miso           = port:PC02<3><0><2><default>
+spi0_wp             = port:PC03<3><0><2><default>
+spi0_mosi           = port:PC04<3><0><2><default>
+spi0_hold           = port:PC05<3><0><2><default>
+
+[spif0]
+spif_sclk           = port:PC00<4><0><3><default>
+spif_cs             = port:PC01<4><1><3><default>
+spif_miso           = port:PC02<4><0><3><default>
+spif_wp             = port:PC03<4><1><3><default>
+spif_mosi           = port:PC04<4><0><3><default>
+spif_hold           = port:PC05<4><1><3><default>
+
+[spi0]
+spi0_sclk           = port:PC00<3><0><2><default>
+spi0_cs             = port:PC01<3><1><2><default>
+spi0_miso           = port:PC02<3><0><2><default>
+spi0_wp             = port:PC03<3><0><2><default>
+spi0_mosi           = port:PC04<3><0><2><default>
+spi0_hold           = port:PC05<3><0><2><default>
+
+[spi1]
+; 本板未接 SPI1 外设（Nor 走 spi0@PC，屏走 MIPI DSI）。
+; 若保留下列 GPIO，Boot/脚本可能把 PD0-5 配成 SPI1，与 PA(PD4)、UART4(PD6/7) 冲突。
+;spi1_sclk           = port:PD01<3><0><3><default>
+;spi1_cs             = port:PD00<3><1><2><default>
+;spi1_mosi           = port:PD02<3><0><2><default>
+;spi1_miso           = port:PD03<3><0><2><default>
+;spi1_wp             = port:PD05<3><0><2><default>
+;spi1_hold           = port:PD04<3><0><2><default>
+
+[card_boot]
+card_no = 2
+;----------------------------------------------------------------------------------
+;card_ctrl 		-卡量产相关的控制器选择0      |
+;card_high_speed        -速度模式 0为低速，1为高速|
+;card_line        	-4：4线卡，8：8线卡|
+;sdc_d1  		-sdc卡数据1线信号的GPIO配置     |
+;sdc_d0			-sdc卡数据0线信号的GPIO配置  |
+;sdc_clk  		-sdc卡时钟信号的GPIO配置   |
+;sdc_cmd       		-sdc命令信号的GPIO配置|
+;sdc_d3  		-sdc卡数据3线信号的GPIO配置    |
+;sdc_d2			-sdc卡数据2线信号的GPIO配置  |
+;----------------------------------------------------------------------------------
+[card0_boot_para]
+card_ctrl       = 0
+card_high_speed = 1
+card_line       = 4
+sdc_d1          = port:PF0<2><1><2><default>
+sdc_d0          = port:PF1<2><1><2><default>
+sdc_clk         = port:PF2<2><1><2><default>
+sdc_cmd         = port:PF3<2><1><2><default>
+sdc_d3          = port:PF4<2><1><2><default>
+sdc_d2          = port:PF5<2><1><2><default>
+bus-width = 4
+cap-sd-highspeed =
+cap-wait-while-busy =
+no-sdio =
+no-mmc =
+sunxi-power-save-mode =
+
+
+;----------------------------------------------------------------------------------
+;card_ctrl  		-卡启动控制器选择2
+;card_high_speed       	-速度模式 0为低速，1为高速
+;card_line        	-4：4线卡，8：8线卡
+;sdc_ds  		-ds信号的GPIO配置
+;sdc_d1  		-sdc卡数据1线信号的GPIO配置
+;sdc_d0			-sdc卡数据0线信号的GPIO配置
+;sdc_clk  		-sdc卡时钟信号的GPIO配置
+;sdc_cmd       		-sdc命令信号的GPIO配置
+;sdc_d3  		-sdc卡数据3线信号的GPIO配置
+;sdc_d2			-sdc卡数据2线信号的GPIO配置
+;sdc_d4  		-sdc卡数据4线信号的GPIO配置
+;sdc_d5			-sdc卡数据5线信号的GPIO配置
+;sdc_d6 	 	-sdc卡数据6线信号的GPIO配置
+;sdc_d7			-sdc卡数据7线信号的GPIO配置
+;sdc_emmc_rst  		-emmc_rst信号的GPIO配置
+;sdc_ex_dly_used  	-ex_dly_used信号
+;sdc_io_1v8  		-sdc_io_1v8高速emmc模式配置
+;----------------------------------------------------------------------------------
+[card2_boot_para]
+card_ctrl       = 2
+card_high_speed = 1
+card_line       = 4
+sdc_clk         = port:PC0<2><1><2><default>
+sdc_cmd         = port:PC1<2><1><2><default>
+sdc_d0          = port:PC4<2><1><2><default>
+sdc_d1          = port:PC3<2><1><2><default>
+sdc_d2          = port:PC2<2><1><2><default>
+sdc_d3          = port:PC5<2><1><2><default>
+
+;----------------------------------------------------------------------------------
+;twi configuration
+;twi_used	0：关闭, 1：打开
+;twi_port	0:twi0,  1:twi1, 2:twi2, 3:twi3, 4:twi4, 5:twi5, 6:r_twi0, 7:r_twi1
+;twi_scl	boot0 scl的GPIO配置
+;twi_sda	boot0 sda的GPIO配置
+;----------------------------------------------------------------------------------
+;[twi_para]
+;twi_used = 0
+;twi_port = 2
+;twi_scl  = port:PC0<3><1><0><default>
+;twi_sda  = port:PC1<3><1><0><default>
+
+[twi0]
+twi_used = 1
+twi_port = 0
+twi_scl  = port:PE2<4><1><0><default>
+twi_sda  = port:PE3<4><1><0><default>
+
+[twi1]
+twi_used = 1
+twi_port = 1
+twi_drv_used = 0
+; Schematic: PD0 TWI1_SCL / PD1 TWI1_SDA (Function4).
+twi_scl = port:PD00<4><1><0><default>
+twi_sda = port:PD01<4><1><0><default>
+
+[twi2]
+twi_used = 1
+twi_port = 2
+twi_scl  = port:PE4<4><1><0><default>
+twi_sda  = port:PE5<4><1><0><default>
+
+;----------------------------------------------------------------------------------
+;capacitor tp configuration
+;external int function
+;wakeup output function
+;ctp_driver			-驱动IC名称
+;ctp_modify_reg			-xy交换
+;ctp_reverse_x			-x坐标极性反转
+;ctp_reverse_y			-y坐标极性反转
+;----------------------------------------------------------------------------------
+[ctp_para]
+ctp_used                = 1
+; ST7123（4.3" 480x800 incell）用 TWI1；若上板 I2C NACK 先确认 twi 总线号
+ctp_twi_id              = 1
+ctp_twi_addr            = 0xAA
+; 驱动名必须是 sunxi_st7123，对应 tpdev/st7123.c 里 .name 字段，
+; 否则 ctp 框架找不到驱动，日志会报 "ctp driver not found"
+ctp_driver              = "sunxi_st7123"
+; 触摸坐标范围必须与面板分辨率一致（480x800）。
+; ST7123 芯片自身会报 MaxX/MaxY，驱动里已做兜底，但这里仍写正确值，
+; 保证 CTP 框架按面板尺寸做边界裁剪。
+ctp_screen_max_x        = 480
+ctp_screen_max_y        = 800
+; 坐标方向修正：4.3" 屏装到本板后若方向反了，改这两个值
+;   ctp_reverse_x / ctp_reverse_y: 1=反向, 0=正向
+ctp_reverse_x           = 0
+ctp_reverse_y           = 0
+ctp_modify_reg          = 0
+ ; In-cell shared boot reset: LCD_RST PD9 and TP_RST PD3.
+; Both reset lines are owned by ksdiy_incell_reset_once(), not individual drivers.
+ctp_int_port = port:PD02<0><1><3><default>
+ctp_wakeup = port:PD03<1><0><3><1>
+
+;----------------------------------------------------------------------------------
+;jtag_enable  	|JTAG使能   |
+;jtag_ms        |测试模式选择输入(TMS) 的GPIO配置|
+;jtag_ck 	|测试时钟输入(CLK) 的GPIO配置    |
+;jtag_do	|测试数据输出(TDO) 的GPIO配置     |
+;jtag_di	|测试数据输出(TDI) 的GPIO配置     |
+;----------------------------------------------------------------------------------
+[jtag_para]
+jtag_enable     = 0
+jtag_ms         = port:PF0<4><default><default><default>
+jtag_ck         = port:PF5<4><default><default><default>
+jtag_do         = port:PF3<4><default><default><default>
+jtag_di         = port:PF1<4><default><default><default>
+
+;*****************************************************************************
+;sdram configuration
+;说明：lpsram时未使用 252-->348
+;*****************************************************************************
+[dram_para]
+dram_clk            = 348
+dram_type           = 3
+dram_zq             = 0x7bfbfb
+dram_odt_en         = 0x0
+dram_para1          = 0x00000010
+dram_para2          = 0x00000000
+dram_mr0            = 0x0
+dram_mr1            = 0x0
+dram_mr2            = 0x0
+dram_mr3            = 0x0
+dram_tpr0           = 0x0
+dram_tpr1           = 0x0
+dram_tpr2           = 0x0
+dram_tpr3           = 0x0
+dram_tpr4           = 0x0
+dram_tpr5           = 0x0
+dram_tpr6           = 0x0
+dram_tpr7           = 0x0
+dram_tpr8           = 0x0
+dram_tpr9           = 0x0
+dram_tpr10          = 0x0
+dram_tpr11          = 0x0
+dram_tpr12          = 0x0
+dram_tpr13          = 0x0
+
+;----------------------------------------------------------------------------------
+;standby wakeup source config
+;---| interrupt num | module name  |
+;---|     5         |     uart3    |
+;---|     57        |     gpadc    |
+;---|     144       |     rtc      |
+;----------------------------------------------------------------------------------
+[standby_para]
+standby_irq_num0 = 5
+standby_irq_num1 = 57
+standby_irq_num2 = 144
+
+;----------------------------------------------------------------------------------
+;uart configuration
+;uart_debug_port  |Boot串口控制器编号        |
+;uart_debug_tx       |Boot串口发送的GPIO配置|
+;uart_debug_rx  |Boot串口接收的GPIO配置     |
+;----------------------------------------------------------------------------------
+[uart_para]
+; JP1 console: PD6 TX / PD7 RX, UART4, 115200 8N1.
+; F101 User Manual Table 16-18: PD6/PD7 UART4 is Function5.
+; Function6 on PD6/PD7 is PWM0-0/PWM0-1; PE2/PE3 use a different mux.
+uart_debug_port = 4
+uart_debug_baudrate = 115200
+uart_debug_tx   = port:PD06<5><1><default><default>
+uart_debug_rx   = port:PD07<5><1><default><default>
+
+[uart0]
+; PE00/PE01 与 sdc2 的 D1/D0 冲突，已让给 AIC8800 SDIO。
+; 保留段但不分配引脚，串口日志因此不可用，改走 ADB。
+;uart_tx   = port:PE00<6><1><default><default>
+;uart_rx   = port:PE01<6><1><default><default>
+;dma_tx_used = 0
+;dma_rx_used = 0
+
+[uart1]
+; PE10 让给 AIC8800 REG_ON；PD22 与 LCD PWM7 冲突。
+; 本板不使用 uart1。
+;uart_tx   = port:PE10<6><1><default><default>
+;uart_rx   = port:PD22<5><1><default><default>
+;dma_tx_used = 0
+;dma_rx_used = 0
+
+[uart2]
+; 蓝牙 HCI（H:4），115200，硬件流控
+; TX=PE6 RX=PE7 RTS=PE8 CTS=PE9（mux=3，与 yuzukineko 一致）
+; 注：CONFIG_DRIVERS_AIC8800 当前未启用，此段暂不生效，保留备用。
+uart_tx   = port:PE06<3><1><default><default>
+uart_rx   = port:PE07<3><1><default><default>
+uart_rts  = port:PE08<3><1><default><default>
+uart_cts  = port:PE09<3><1><default><default>
+dma_tx_used = 0
+dma_rx_used = 0
+
+[uart4]
+; RTOS HAL pinctrl for the same console selected by [uart_para].
+; PD6/PD7 Function5 (not PE2/PE3 Function6).
+uart_tx   = port:PD06<5><1><default><default>
+uart_rx   = port:PD07<5><1><default><default>
+
+[uart3]
+; PE08/PE09 让给 uart2 作 RTS/CTS，本板不使用 uart3。
+;uart_tx   = port:PE08<6><1><default><default>
+;uart_rx   = port:PE09<6><1><default><default>
+;dma_tx_used = 0
+;dma_rx_used = 0
+
+[gpadc_para]
+gpadc_channel = 0
+gpadc_power_vol = 1037
+gpadc_lowdata_cmp_vol   = 1200
+gpadc_use_power_key = 1
+
+[spilcd_fb0]
+spilcd_used            = 0
+spilcd_model_name      = "spilcd"
+spilcd_driver_name     = "kld2844b"
+spilcd_x               = 320
+spilcd_y               = 240
+spilcd_width           = 60
+spilcd_height          = 95
+spilcd_data_speed      = 60
+spilcd_pwm_used        = 1
+spilcd_pwm_ch          = 0
+spilcd_pwm_freq        = 5000
+spilcd_pwm_pol         = 1
+spilcd_if              = 1
+spilcd_pixel_fmt       = 10
+spilcd_dbi_fmt         = 2
+spilcd_dbi_clk_mode    = 1
+spilcd_dbi_te          = 0
+spifb_buffer_num       = 2
+spilcd_dbi_if          = 4
+spilcd_rgb_order       = 0
+spilcd_fps             = 60
+spilcd_spi_bus_num     = 1
+spilcd_frm             = 1
+spilcd_gamma_en        = 1
+spilcd_backlight       = 100
+spilcd_power_num       = 0
+spilcd_gpio_regu_num   = 0
+spilcd_bl_percent_num  = 0
+
+;spilcd_gpio_0 = port:PD04<1><1><3><1>
+;spilcd_spi_te_pin = port:PD05<0><1><3><1>
+
+;spilcd_spi_dc_pin      = port:PA19<1><0><3><0>
+
+;------------------------------------------------------------------------------
+;pwm config
+;------------------------------------------------------------------------------
+[pwm2]
+; F101 Table 16-18: LCD_BL PD22 is Function4 PWM0-2.
+pwm_pin = port:PD22<4><default><default><default>
+
+;----------------------------------------------------------------------------------
+;disp init configuration
+;
+;disp_mode             (0:screen0<screen0,fb0>)
+;de_dither_en          (0:disable; 1:enable)
+;de_dither_fmt         (0: 888; 1:444; 2:565; 3:666)
+;de_dither_mode        (0：Quantization; 1：Floyd-Steinberg; 3：Ordered(565/666 not supported); 4：Sierra Lite; 5：Burkes)
+;de_dither_width       (width)
+;de_dither_height      (height)
+;screenx_output_type   (0:none; 1:lcd; 3:hdmi;)
+;screenx_output_mode   (used for hdmi output, 0:480i 1:576i 2:480p 3:576p 4:720p50)
+;                      (5:720p60 6:1080i50 7:1080i60 8:1080p24 9:1080p50 10:1080p60)
+;fbx format            (4:RGB655 5:RGB565 6:RGB556 7:ARGB1555 8:RGBA5551 9:RGB888 10:ARGB8888 12:ARGB4444)
+;fbx pixel sequence    (0:ARGB 1:BGRA 2:ABGR 3:RGBA)
+;fb0_scaler_mode_enable(scaler mode enable, used FE)
+;fbx_width,fbx_height  (framebuffer horizontal/vertical pixels, fix to output resolution while equal 0)
+;lcdx_backlight        (lcd init backlight,the range:[0,256],default:197
+;lcdx_yy               (lcd init screen bright/contrast/saturation/hue, value:0~100, default:50/50/57/50)
+;lcd0_contrast         (LCD contrast, 0~100)
+;lcd0_saturation       (LCD saturation, 0~100)
+;lcd0_hue              (LCD hue, 0~100)
+;----------------------------------------------------------------------------------
+[disp]
+disp_init_enable         = 1
+disp_mode                = 0
+
+de_dither_en             = 1
+de_dither_fmt            = 3
+de_dither_mode           = 4
+de_dither_width = 480
+de_dither_height = 800
+
+screen0_output_type      = 1
+screen0_output_mode      = 4
+
+screen0_output_format    = 1
+screen0_output_bits      = 0
+screen0_output_eotf      = 4
+screen0_output_cs        = 257
+screen0_output_dvi_hdmi  = 2
+screen0_output_range     = 2
+screen0_output_scan      = 0
+screen0_output_aspect_ratio = 8
+
+screen1_output_type      = 1
+screen1_output_mode      = 4
+screen1_output_format    = 1
+screen1_output_bits      = 0
+screen1_output_eotf      = 4
+screen1_output_cs        = 260
+screen1_output_dvi_hdmi  = 2
+screen1_output_range     = 2
+screen1_output_scan      = 0
+screen1_output_aspect_ratio = 8
+
+
+fb0_format               = 0
+fb0_width                = 0
+fb0_height               = 0
+
+fb1_format               = 0
+fb1_width                = 0
+fb1_height               = 0
+
+lcd0_backlight           = 50
+lcd1_backlight           = 50
+
+lcd0_bright              = 50
+lcd0_contrast            = 50
+lcd0_saturation          = 57
+lcd0_hue                 = 50
+
+lcd1_bright              = 50
+lcd1_contrast            = 50
+lcd1_saturation          = 57
+lcd1_hue                 = 50
+
+;----------------------------------------------------------------------------------
+;lcd0 configuration
+
+;lcd_if:               0:hv(sync+de); 1:8080; 2:ttl; 3:lvds; 4:dsi; 5:edp; 6:extend dsi
+;lcd_x:                lcd horizontal resolution
+;lcd_y:                lcd vertical resolution
+;lcd_width:            width of lcd in mm
+;lcd_height:           height of lcd in mm
+;lcd_dclk_freq:        in MHZ unit
+;lcd_pwm_freq:         in HZ unit
+;lcd_pwm_pol:          lcd backlight PWM polarity
+;lcd_pwm_max_limit     lcd backlight PWM max limit(<=255)
+;lcd_hbp:              hsync back porch
+;lcd_ht:               hsync total cycle
+;lcd_vbp:              vsync back porch
+;lcd_vt:               vysnc total cycle
+;lcd_hspw:             hsync plus width
+;lcd_vspw:             vysnc plus width
+;lcd_lvds_if:          0:single link;  1:dual link
+;lcd_lvds_colordepth:  0:8bit; 1:6bit
+;lcd_lvds_mode:        0:NS mode; 1:JEIDA mode
+;lcd_frm:              0:disable; 1:enable rgb666 dither; 2:enable rgb656 dither
+;lcd_io_phase:         0:noraml; 1:intert phase(0~3bit: vsync phase; 4~7bit:hsync phase;
+;                      8~11bit:dclk phase; 12~15bit:de phase)
+;lcd_gamma_en          lcd gamma correction enable
+;lcd_bright_curve_en   lcd bright curve correction enable
+;lcd_cmap_en           lcd color map function enable
+;deu_mode              0:smoll lcd screen; 1:large lcd screen(larger than 10inch)
+;lcdgamma4iep:         Smart Backlight parameter, lcd gamma vale * 10;
+;                      decrease it while lcd is not bright enough; increase while lcd is too bright
+;smart_color           90:normal lcd screen 65:retina lcd screen(9.7inch)
+;lcd_hs_trail_set      set value of dsi: 0x1010[31:24] to set dphy hs trail，hs_tail = (lcd_hs_trail_set + 2)*Tbyteclk+(2~3)*Tclk-(3~4)*Tclkd8
+;lcd_clk_trail_set      set value of dsi: 0x1018[7:0] to set clock trail,clk_trail = (lcd_clk_trail_set + 2)*tclk
+;----------------------------------------------------------------------------------
+;LVDS single link  1366*768
+;[lcd0]
+;lcd_used            = 1
+;lcd_driver_name     = "default_lcd"
+;lcd_backlight       = 50
+;lcd_if              = 3
+;lcd_x               = 1368
+;lcd_y               = 768
+;lcd_width           = 150
+;lcd_height          = 94
+;lcd_dclk_freq       = 68
+;lcd_pwm_used        = 1
+;lcd_pwm_ch          = 3
+;lcd_pwm_freq        = 20000
+;lcd_pwm_pol         = 0
+;lcd_pwm_max_limit   = 100
+;lcd_hbp             = 80
+;lcd_ht              = 1478
+;lcd_hspw            = 32
+;lcd_vbp             = 12
+;lcd_vt              = 790
+;lcd_vspw            = 4
+;lcd_lvds_if         = 0
+;lcd_lvds_colordepth = 1
+;lcd_lvds_mode       = 0
+;lcd_frm             = 1
+;lcd_hv_clk_phase	= 0
+;lcd_hv_sync_polarity	= 0
+;lcd_gamma_en        = 0
+;lcd_bright_curve_en = 0
+;lcd_cmap_en         = 0
+;deu_mode            = 0
+;lcdgamma4iep        = 22
+;smart_color         = 90
+
+;lcd_bl_en           = port:PD08<1><0><3><1>
+
+;lcd_gpio_0               = port:PD12<3><0><3><default>
+;lcd_gpio_1               = port:PD13<3><0><3><default>
+;lcd_gpio_2               = port:PD14<3><0><3><default>
+;lcd_gpio_3               = port:PD15<3><0><3><default>
+;lcd_gpio_4               = port:PD16<3><0><3><default>
+;lcd_gpio_5               = port:PD17<3><0><3><default>
+;lcd_gpio_6               = port:PD18<3><0><3><default>
+;lcd_gpio_7               = port:PD19<3><0><3><default>
+;lcd_gpio_8               = port:PD20<3><0><3><default>
+;lcd_gpio_9               = port:PD21<3><0><3><default>
+
+;DSI
+[lcd0]
+lcd_used            = 1
+lcd_if              = 4
+lcd_rgb_swap         = 0
+lcd_pwm_used        = 1
+lcd_pwm_ch = 2
+lcd_pwm_freq        = 20000
+lcd_pwm_pol         = 1
+lcd_pwm_max_limit   = 100
+
+;; TFT0268_376x960  2xLanes
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 376
+;lcd_y               = 960
+;lcd_width           = 27
+;lcd_height          = 68
+;lcd_hbp             = 160
+;lcd_ht              = 636
+;lcd_hspw            = 20
+;lcd_vbp             = 40
+;lcd_vt              = 1030
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 32
+;lcd_backlight       = 30
+
+;; TFT0458_568x1210  AMOLED 2xLanes
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 568
+;lcd_y               = 1210
+;lcd_width           = 47
+;lcd_height          = 101
+;lcd_hbp             = 250
+;lcd_ht              = 1072
+;lcd_hspw            = 4
+;lcd_vbp             = 12
+;lcd_vt              = 1250
+;lcd_vspw            = 4
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 68
+;lcd_backlight       = 30
+
+;; TFT0495_960x544  AMOLED 2xLanes
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 960
+;lcd_y               = 544
+;lcd_width           = 110
+;lcd_height          = 62
+;lcd_hbp             = 40
+;lcd_ht              = 1040
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 600
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 38
+;lcd_backlight       = 30
+
+;; TFT050_480x854  2xLanes
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 480
+;lcd_y               = 854
+;lcd_width           = 62
+;lcd_height          = 110
+;lcd_hbp             = 40
+;lcd_ht              = 600
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 960
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 34
+;lcd_backlight       = 30
+
+;; TFT050_540x960 2xLanes  [disabled - 实际屏为 1024x600]
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 540
+;lcd_y               = 960
+;lcd_width           = 62
+;lcd_height          = 110
+;lcd_hbp             = 40
+;lcd_ht              = 620
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 1000
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 36
+;lcd_backlight       = 30
+
+;; TFT050_960x540 2xLanes
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 960
+;lcd_y               = 540
+;lcd_width           = 110
+;lcd_height          = 62
+;lcd_hbp             = 40
+;lcd_ht              = 1040
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 580
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 36
+;lcd_backlight       = 50
+
+;; TFT055_720x1280 4xLanes
+;lcd_driver_name     = "mipi_tft055_720x1280"
+;lcd_x               = 720
+;lcd_y               = 1280
+;lcd_width           = 68
+;lcd_height          = 121
+;lcd_hbp             = 40
+;lcd_ht              = 800
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 1320
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 55
+;lcd_backlight       = 50
+
+;; TFT0686_480x1280 4xLanes
+;lcd_driver_name     = "mipi_tft0686_480x1280"
+;lcd_x               = 480
+;lcd_y               = 1280
+;lcd_width           = 59
+;lcd_height          = 190
+;lcd_hbp             = 60
+;lcd_ht              = 600
+;lcd_hspw            = 20
+;lcd_vbp             = 30
+;lcd_vt              = 1350
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 48
+;lcd_backlight       = 50
+
+;; TFT0695_600x1024  3Lanes
+;lcd_driver_name     = "mipi_tft0695_600x1024"
+;lcd_x               = 600
+;lcd_y               = 1024
+;lcd_width           = 89
+;lcd_height          = 152
+;lcd_hbp             = 35
+;lcd_ht              = 660
+;lcd_hspw            = 15
+;lcd_vbp             = 15
+;lcd_vt              = 1054
+;lcd_vspw            = 5
+;lcd_dsi_lane        = 3
+;lcd_dclk_freq       = 38
+;lcd_backlight       = 100
+
+
+;; ST7102_480x800  4.3" incell touch  2Lanes
+;;
+;; 参数来源：ESP32-P4 工程 components/esp_lcd_st7102
+;;   ST7102_VIDEO_TIMING_480_800():
+;;     h_size=480  hsync_back_porch=40  hsync_pulse_width=2  hsync_front_porch=40
+;;     v_size=800  vsync_back_porch=10  vsync_pulse_width=2  vsync_front_porch=310
+;;   ST7102_MIPI_480_800_PANEL_60HZ_DPI_CONFIG(): dpi_clock = 37.8 MHz
+;;
+;; 换算（全志的 ht/vt 含前后肩）：
+;;   lcd_ht = 480 + 40 + 2 + 40  = 562
+;;   lcd_vt = 800 + 10 + 2 + 310 = 1122
+;;   刷新率 = 38e6 / 562 / 1122 = 60.3 Hz
+lcd_driver_name     = "mipi_st7102_480x800"
+lcd_x               = 480
+lcd_y               = 800
+lcd_width           = 55
+lcd_height          = 92
+lcd_hbp = 42
+lcd_ht              = 562
+; F101 DSI video packets require >=10 bytes HSA (4 RGB888 pixels).
+; Keep cumulative HBP=42 and HT=562: active start and line period unchanged.
+lcd_hspw            = 4
+lcd_vbp = 12
+lcd_vt              = 1122
+lcd_vspw            = 2
+lcd_dsi_lane        = 2
+lcd_dclk_freq       = 38
+lcd_backlight       = 100
+
+;; TFT070_1024x600  2Lanes  [disabled - 实际屏为 6.95" 600x1024]
+;lcd_driver_name     = "mipi_tft070_1024x600"
+;lcd_x               = 1024
+;lcd_y               = 600
+;lcd_width           = 154
+;lcd_height          = 86
+;lcd_hbp             = 30
+;lcd_ht              = 1300
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 650
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 50
+;lcd_backlight       = 153
+
+;; TFT0784_400x1280 4xLanes
+;lcd_driver_name     = "mipi_tft0784_400x1280"
+;lcd_x               = 400
+;lcd_y               = 1280
+;lcd_width           = 59
+;lcd_height          = 190
+;lcd_hbp             = 40
+;lcd_ht              = 480
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 1320
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 48
+;lcd_backlight       = 30
+
+;; TFT092_462x1920 4xLanes  462-->464
+;lcd_driver_name     = "mipi_tft092_462x1920"
+;lcd_x               = 464
+;lcd_y               = 1920
+;lcd_width           = 54
+;lcd_height          = 226
+;lcd_hbp             = 35
+;lcd_ht              = 535
+;lcd_hspw            = 15
+;lcd_vbp             = 15
+;lcd_vt              = 1950
+;lcd_vspw            = 5
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 60
+;lcd_backlight       = 50
+
+;; TFT101_800x1280  4Lanes
+;lcd_driver_name     = "mipi_tft101_800x1280"
+;lcd_x               = 800
+;lcd_y               = 1280
+;lcd_width           = 135
+;lcd_height          = 216
+;lcd_hbp             = 35
+;lcd_ht              = 860
+;lcd_hspw            = 15
+;lcd_vbp             = 24
+;lcd_vt              = 1330
+;lcd_vspw            = 4
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 68
+;lcd_backlight       = 50
+
+;; TFT1026_600x1600  4Lanes
+;lcd_driver_name     = "mipi_tft1026_600x1600"
+;lcd_x               = 600
+;lcd_y               = 1600
+;lcd_width           = 83
+;lcd_height          = 221
+;lcd_hbp             = 25
+;lcd_ht              = 650
+;lcd_hspw            = 15
+;lcd_vbp             = 15
+;lcd_vt              = 1650
+;lcd_vspw            = 5
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 55
+;lcd_backlight       = 50
+
+;; TFT1126_440x1920  4Lanes
+;lcd_driver_name     = "mipi_tft1126_440x1920"
+;lcd_x               = 440
+;lcd_y               = 1920
+;lcd_width           = 58
+;lcd_height          = 253
+;lcd_hbp             = 35
+;lcd_ht              = 510
+;lcd_hspw            = 15
+;lcd_vbp             = 15
+;lcd_vt              = 1950
+;lcd_vspw            = 5
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 60
+;lcd_backlight       = 50
+
+;; TFT113_140x1920  2Lanes
+;lcd_driver_name     = "mipi_tft113_140x1920"
+;lcd_x               = 140
+;lcd_y               = 1920
+;lcd_width           = 21
+;lcd_height          = 282
+;lcd_hbp             = 80
+;lcd_ht              = 300
+;lcd_hspw            = 40
+;lcd_vbp             = 16
+;lcd_vt              = 1952
+;lcd_vspw            = 8
+;lcd_dsi_lane        = 2
+;lcd_dclk_freq       = 35
+;lcd_backlight       = 50
+
+;; TFT1188_320x1480  4Lanes
+;lcd_driver_name     = "mipi_tft1188_320x1480"
+;lcd_x               = 320
+;lcd_y               = 1480
+;lcd_width           = 58
+;lcd_height          = 268
+;lcd_hbp             = 40
+;lcd_ht              = 400
+;lcd_hspw            = 20
+;lcd_vbp             = 20
+;lcd_vt              = 1520
+;lcd_vspw            = 10
+;lcd_dsi_lane        = 4
+;lcd_dclk_freq       = 36
+;lcd_backlight       = 50
+
+; F101 native non-burst video: verified clear with this panel's BSP table.
+lcd_dsi_if          = 0
+lcd_dsi_slave_if   = 0
+lcd_dsi_clk_if    = 0
+lcd_dsi_format      = 0
+lcd_dsi_te          = 0
+lcd_hs_trail_set	= 8
+lcd_frm             = 0
+lcd_io_phase        = 0x0000
+lcd_gamma_en        = 0
+lcd_bright_curve_en = 0
+lcd_cmap_en         = 0
+deu_mode            = 0
+lcdgamma4iep        = 22
+mart_color         = 90
+
+ ; LCD_RST/TP_RST are reset together once before disp_probe().
+; No lcd_gpio_reset or reset-on/exit-sequence: no later individual pulses.
+lcd_gpio_0               = port:PD12<4><0><3><default>
+lcd_gpio_1               = port:PD13<4><0><3><default>
+lcd_gpio_2               = port:PD14<4><0><3><default>
+lcd_gpio_3               = port:PD15<4><0><3><default>
+lcd_gpio_4               = port:PD16<4><0><3><default>
+lcd_gpio_5               = port:PD17<4><0><3><default>
+
+[audiocodec]
+dac_vol			= 63
+dacl_vol		= 160
+lineout_gain		= 31
+lineoutl_en		= 1
+spk_en			= 1
+hpout_en		= 0
+playback_cma		= 16
+capture_cma		= 16
+pa_msleep_time		= 10
+; 功放使能：PD4（本板实测的 PA 使能引脚）
+pa_pin			= port:PD04<1><default><1><1>
+
+[daudio0]
+tdm_num			= 0
+daudio_master		= 4
+audio_format		= 1
+signal_inversion	= 1
+pcm_lrck_period		= 64
+slot_width_select	= 32
+msb_lsb_first		= 0
+frametype		= 0
+tx_data_mode		= 0
+rx_data_mode		= 0
+tdm_config		= 1
+mclk_div		= 1
+rx_sync_en		= 0
+rx_sync_ctl		= 0
+playback_cma		= 64
+capture_cma		= 64
+i2s0_mclk		= port:PI3<2><0><1><default>
+i2s0_bclk		= port:PI0<2><0><1><default>
+i2s0_lrck		= port:PI1<2><0><1><default>
+i2s0_din0		= port:PI2<2><0><1><default>
+
+[dmic]
+capture_cma		= 16
+
+[owa]
+playback_cma		= 16
+capture_cma		= 16
+[osal_cfg_test]
+test_key_value = 0
+test_gpio1 = port:PA16<5><1><default><default>
+test_gpio2 = port:PA17<5><1><default><default>
+
+;--------------------------------
+;[usbc0]：控制器0的配置。
+;usb_used：USB使能标志。置1，表示系统中USB模块可用,置0,则表示系统USB禁用。
+;usb_port_type：USB端口的使用情况。 0：device only;1：host only;2：OTG
+;usb_detect_type：USB端口的检查方式。0：不做检测;1：vbus/id检查;2：id/dpdm检查
+;usb_detect_mode：USB端口的检查方式。0：线程轮询;1：id中断触发
+;usb_id_gpio：USB ID pin脚配置。具体请参考gpio配置说明。
+;usb_det_vbus_gpio：USB DET_VBUS pin脚配置。具体请参考gpio配置说明。
+;usb_drv_vbus_gpio：USB DRY_VBUS pin脚配置。具体请参考gpio配置说明。
+;usb_drv_vbus_type:	vbus设置方式。0：无; 1：gpio; 2：axp。
+;usb_det_vbus_gpio: "axp_ctrl",表示axp 提供
+;usb_restrict_gpio  usb限流控制pin
+;usb_restric_flag:  usb限流标置
+;usbh_driver_level:	usb做host时驱动能力0x0-0xf
+;usbd_driver_level:	usb做device时驱动能力0x0-0xf
+;usbh_irq_flag:	usb host中断标志 设置为0x4000可为唤醒源，设置为0不具有唤醒功能。
+;usbd_irq_flag: usb device中断标志 设置为0x4000可为唤醒源，设置为0不具有唤醒功能。
+;--------------------------------
+;--------------------------------
+;---       USB0控制标志
+;--------------------------------
+[usbc0]
+usb_used                = 1
+; 0 = device only（ADB / 烧录用），1 = host only（U盘），2 = OTG
+; 本板单 USB 口，用作 device 模式跑 adbd，
+; 配合串口 `reboot efex` 可直接进烧录，不用反复插拔。
+usb_port_type           = 0
+usb_detect_type         = 1
+usb_detect_mode		    = 0
+; device 模式下不需要 VBUS 供电输出，注释掉避免干扰
+;usb_drv_vbus_gpio       = port:PE02<1><0><default><0>
+usb_drv_vbus_type       = 0
+usb_host_init_state     = 0
+usb_restric_flag        = 0
+usb_restric_voltage     = 3550000
+usb_restric_capacity    = 5
+usbd_irq_flag			= 0
+usbh_irq_flag			= 0
+
+;-----------------------------------------------------------------------------
+;sunxi rtos audio driver v2
+;-----------------------------------------------------------------------------
+[i2s0_mach]
+format = "i2s"
+bitclock-inversion = 0
+frame-inversion = 0
+bitclock-master = "cpu"
+frame-master = "cpu"
+slot-num = 2
+slot-width = 32
+playback-only = 0
+capture-only = 0
+cpu-pll-fs = 1
+mclk-fs = 1
+mclk-fp = "11289600,12288000"
+codec-pll-fp = "22579200, 24576000"
+codec-pllin-mode = 0
+codec-pllin-fs = 1
+codec-pllout-mode = 0
+codec-pllout-fs = 1
+cpu = "i2s0_plat"
+cpu-id = 0
+
+;[i2s0_plat]
+;playback-cma		= 8
+;capture-cma		= 8
+;tdm-num			= 0
+;tx-pin			= "0"
+;tx-pin0-chmap		= "0,1,2,3"
+;rxfifo-pinmap		= "0,0,0,0"
+;rxfifo-chmap		= "0,1,2,3"
+;tx-lsb-first		= "false"
+;rx-lsb-first		= "false"
+;i2s-pins-0		= port:PE0<5><0><1><default>
+;i2s-pins-1		= port:PE1<5><0><1><default>
+;i2s-pins-2		= port:PE2<5><0><1><default>
+;i2s-pins-3		= port:PE3<5><0><1><default>
+;i2s-pins-5		= port:PE4<5><0><1><default>
+
+[codec_mach]
+cpu = "codec_plat"
+codecs-num = 1
+codecs-0 = "codec"
+
+[codec_plat]
+playback_cma	= 8
+capture_cma		= 8
+
+[codec]
+dac_vol	= 63
+dacl_vol	= 160
+dacr_vol	= 160
+hpout_gain	= 7
+adc1_vol	= 160
+adc1_gain	= 15
+lineinl_gain	= 6
+fminl_gain	= 6
+adcdrc_en     	= 0
+adchpf_en     	= 0
+dacdrc_en     	= 0
+dachpf_en     	= 0
+adc1_src	= 1
+hpoutl_en	= 1
+hpoutr_en	= 1
+spk_en		= 1
+pa-pin-max  = 1
+; 功放使能：PD4（与 [audiocodec] 的 pa_pin 保持一致）
+; 原值 PD7 已让给 UART4 RX（调试串口）
+pa-pin-0    = port:PD04<1><default><1><1>
+pa-pin-msleep-0 = 100
+
+[owa_mach]
+playback-only = 1
+cpu = "owa_plat"
+
+[owa_plat]
+playback-cma	= 8
+capture-cma		= 8
+;owa-pins-0		= port:PE6<6><0><1><default>
+
+;----------------------------------------------------------------------------------
+;i2c configuration
+;twi_drv_used : 是否使用TWI的drv工作模式，drv工作模式是芯片的IP功能，不是指的TWI的软件驱动，详情请参考芯片手册。
+;----------------------------------------------------------------------------------
+;[twi1]
+;twi_drv_used    = 0
+;twi1_scl         = port:PE00<4><1><0><default>
+;twi1_sda         = port:PE01<4><1><0><default>
+
+;----------------------------------------------------------------------------------
+;resistance tp configuration
+;----------------------------------------------------------------------------------
+[rtp_para]
+rtp_used 				= 0
+rtp_adjust_cfg_path     = "/data/tp.cfg"
+rtp_screen_max_x        = 1024
+rtp_screen_max_y        = 600
+
+[sdcard_global]
+used_card_no    = 0x01
+;used_card_no = 0x01, when use card0
+;used_card_no = 0x02, when use card1
+;used_card_no = 0x03, when use card0 & card1
+internal_card = 0x00
+;internal_card = 0x00, 无内置卡内置卡
+;internal_card = 0x01, card0 做内置卡
+;internal_card = 0x02, card1 做内置卡
+;如果该卡是内置卡，则检测脚未注释，也不会使用
+[sdc0_gpios]
+detect_pin  = port:PF6<0><1><3><default>
+;[sdc1det_para]
+;msdet_para   = port:PG6<0><1><1><default>
+
+[sdc0]
+sdc0_used          = 1
+bus-width      = 4
+sdc0_d1            = port:PF00<2><1><2><default>
+sdc0_d0            = port:PF01<2><1><2><default>
+sdc0_clk           = port:PF02<2><1><2><default>
+sdc0_cmd           = port:PF03<2><1><2><default>
+sdc0_d3            = port:PF04<2><1><2><default>
+sdc0_d2            = port:PF05<2><1><2><default>
+;cd-gpios           = port:PF06<0><1><2><default>
+;card-pwr-gpios     = port:PL08<1><1><2><default>
+;ctl-spec-caps      = 0x4
+;sunxi-power-save-mode =
+;sunxi-dis-signal-vol-sw =
+;vmmc="vcc-sdcv"
+;vqmmc="vcc-sdcvq33"
+;vdmmc="vcc-sdcvd"
+;mmc-ddr-3_3v    = 1
+;sd-uhs-sdr50 = 1
+;sd-uhs-ddr50 = 1
+;sd-uhs-sdr104 = 1
+max-frequency   = 50000000
+
+
+[sdc2]
+sdc2_used = 1
+bus-width= 4
+; AIC8800 SDIO 4-bit，引脚按 yuzukineko 参考设计：
+;   CLK=PE2  CMD=PE3  D0=PE1  D1=PE0  D2=PE5  D3=PE4  (mux=9)
+sdc2_clk = port:PE2<9><1><2>
+sdc2_cmd = port:PE3<9><1><2>
+sdc2_d0 = port:PE1<9><1><2>
+sdc2_d1 = port:PE0<9><1><2>
+sdc2_d2 = port:PE5<9><1><2>
+sdc2_d3 = port:PE4<9><1><2>
+; AIC8800 焊在板上，不存在卡检测
+;cd-gpios = port:PF06<0><1><2><default>
+;ctl-spec-caps = 0x4
+;sunxi-power-save-mode = 1
+;sunxi-dis-signal-vol-sw = 1
+;sd-uhs-sdr50 = 1
+;sd-uhs-ddr50 = 1
+;sd-uhs-sdr104 = 1
+;vmmc="vcc-sdcv"
+;vqmmc="vcc-sdcvq33"
+;vdmmc="vcc-sdcvd"
+max-frequency = 50000000
+
+[wifi_para]
+wifi_used = 1
+; ── AIC8800D40L（WiFi + BLE 二合一），引脚与 YuzukiNeko 参考板一致 ──
+;
+; WiFi 数据面：SDC2 4-bit（见上方 [sdc2]）
+;   CLK=PE2  CMD=PE3  D0=PE1  D1=PE0  D2=PE5  D3=PE4   (mux=9)
+; 蓝牙数据面：UART2（4 线带流控）
+;   TX=PE6  RX=PE7  RTS=PE8  CTS=PE9                    (mux=3)
+; 控制脚：
+;   WL_REG_ON = PE10（高有效，整片供电使能）
+;   BT_RST_N  = PD8 （低有效复位；启用蓝牙时禁止将 PD8 当按键）
+; SDIO 中断走 DAT1 线，不需要单独的 host-wake 脚。
+
+wifi_reg_on = port:PE10<1><0><default><default>
+wifi_reg_on_valid = 1
+wifi_sdc_id = 2
+
+; ── 内置 WiFi 凭据（上电自动连接） ────────────────────────────
+;
+; 首次烧录时 NVS 为空，没有这个配置就要先手动进设置页连 WiFi。
+; 这里填上之后，开机即自动连该网络。
+; 用户在设置页连过别的网络后，NVS 里的凭据优先于这里。
+;
+; 留空（wifi_sta_ssid = ""）则关闭自动连接。
+
+; 蓝牙复位（AIC8800 的 BT_RST_N）
+; LCD/TP 联合复位使用 PD9/PD3；PD8 专供蓝牙复位。
+bt_reset = port:PD08<1><0><3><1>
+bt_used = 1
+bt_uart_id = 2
+; ⚠ PD6/PD7 已让给 UART4 作调试串口（见 [uart_para]）。
+;   蓝牙当前未启用（CONFIG_DRIVERS_BLUETOOTH_XRADIO / AIC8800 均为 n），
+;   所以这里注释掉不影响功能。若以后要接 AIC8800 蓝牙，
+;   需要把这两个脚改到其他空闲 GPIO，或把调试串口挪走。
+;bt_wake_ap  = port:PD6<1><default><default><1>
+;bt_wake_host = port:PD7<0><1><default><default>
+
+[mbus]
+mbus_master_config_num = 2
+
+; RISCV - 
+mbus_config_0_master = 39
+mbus_config_0_master_limit = 500
+
+; DE - 
+mbus_config_1_master = 16
+mbus_config_1_master_prior = 3

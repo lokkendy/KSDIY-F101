@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F101 开发板教学手册</title><style>
+:root{color-scheme:light;--ink:#122632;--muted:#4a606a;--accent:#117669;--rule:#d8e4e5;--wash:#eef7f5}
+*{box-sizing:border-box}
+body{margin:0;background:#eef3f5;color:var(--ink);font-family:"Microsoft YaHei","Noto Sans CJK SC","PingFang SC",sans-serif;line-height:1.72}
+a{color:var(--accent);text-underline-offset:3px}
+.shell{display:grid;grid-template-columns:16rem minmax(0,53rem);gap:2rem;max-width:76rem;margin:auto;padding:2rem}
+nav{position:sticky;top:1.5rem;align-self:start;background:#fff;border:1px solid var(--rule);padding:1.2rem;border-radius:1rem}
+nav strong{font-size:1.22rem} nav ul{margin:.8rem 0 0;padding:0;list-style:none} nav a{display:block;text-decoration:none;padding:.33rem 0;font-size:.93rem} nav a:hover{text-decoration:underline}
+main{min-width:0}
+.cover{background:#15373c;color:#fff;padding:3.2rem 2.6rem;border-radius:1rem;margin-bottom:1.3rem}
+.cover .tag{color:#9cdacf;font-weight:700;letter-spacing:.09em}.cover h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.16;margin:.65rem 0}.cover p{color:#eefaf8;max-width:32rem}
+.cover-list{list-style:none;padding:0;display:grid;gap:.55rem;margin:1.8rem 0 0}.cover-list li{padding:.5rem .75rem;border-left:3px solid #8ad8c9;background:#244b50}
+.chapter{background:#fff;border:1px solid var(--rule);border-radius:1rem;margin-bottom:1.3rem;padding:2rem;scroll-margin:1.5rem}
+.chapter header{border-bottom:2px solid var(--accent);padding-bottom:.45rem;margin-bottom:1rem}
+.kicker{font-size:.8rem;color:var(--accent);font-weight:700;letter-spacing:.11em}
+.chapter h1{font-size:1.74rem;margin:.2rem 0}.chapter h2{font-size:1.15rem;margin:1.2rem 0 .4rem}
+p{margin:.72rem 0} li{margin:.22rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.91rem}
+th{background:var(--wash);color:#153b3b;text-align:left;white-space:normal}
+td,th{border-bottom:1px solid var(--rule);padding:.56rem .65rem;vertical-align:top;overflow-wrap:anywhere}
+tr:nth-child(even) td{background:#f8fbfb}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid var(--rule);border-radius:.5rem;background:#f2f6f7;padding:.75rem;font-size:.85rem;line-height:1.52}
+blockquote{margin:1rem 0;padding:.7rem .9rem;border-left:3px solid var(--accent);background:var(--wash)}
+blockquote p{margin:0}
+footer{padding:.35rem 0;color:var(--muted);font-size:.8rem}
+@media(max-width:820px){.shell{grid-template-columns:minmax(0,1fr);gap:1rem;padding:.9rem}nav{position:static}.chapter,.cover{padding:1.15rem}nav ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:0 .6rem}}
+@page{size:A4;margin:16mm 17mm 16mm;@bottom-right{content:counter(page);font-size:9pt;color:#516970}}
+@media print{
+ body{background:white;font-size:11.5pt;line-height:1.64;print-color-adjust:exact}
+ .shell{display:block;padding:0;max-width:none}
+ nav,footer{display:none}
+ .cover{break-after:page;margin:0;border-radius:0;padding:17mm 12mm}
+ .cover h1{font-size:33pt}
+ .print-content{display:block!important;margin-top:12mm;color:white}
+ .print-content a{color:white;text-decoration:none}.print-content ol{columns:2;padding-left:5mm}
+ .chapter{break-after:page;border:0;padding:0;margin:0;border-radius:0}
+ .chapter:last-of-type{break-after:auto}
+ .chapter h1{font-size:22pt}.chapter h2{font-size:12pt}
+ p{orphans:3;widows:3}
+ thead{display:table-header-group}tr,pre,blockquote{break-inside:avoid}
+ table{font-size:10.5pt;margin:.72rem 0}
+ td,th{padding:2mm}
+}
+</style></head>
+<body><div class="shell"><nav aria-label="课程目录"><strong>F101 学习地图</strong><ul><li><a href="#chapter-01">认识板子</a></li><li><a href="#chapter-02">首次点亮与恢复</a></li><li><a href="#chapter-03">编译第一个应用</a></li><li><a href="#chapter-04">从例程到新应用</a></li><li><a href="#chapter-05">已有应用怎么学</a></li><li><a href="#chapter-06">联网、账号与保存</a></li><li><a href="#chapter-07">视频案例 · 从收到帧到真的出画</a></li><li><a href="#chapter-08">用 AI 和资料包一起开发</a></li><li><a href="#chapter-09">开发过程与验收</a></li></ul>
+<ul><li><a href="固件/固件索引.csv">固件与验证索引</a></li>
+<li><a href="AI协作/任务单.md">AI 任务单</a></li><li><a href="实验/按键计数/README.md">实验 · 按键计数</a></li><li><a href="实验/图传帧率/README.md">实验 · 图传帧率</a></li><li><a href="实验/读启动日志/练习.md">实验 · 读启动日志</a></li></ul></nav><main>
+<section class="cover"><div class="tag">KSDIY · F101S3 4.3 英寸</div><h1>F101 开发板<br>教学手册</h1>
+<p>从第一次点亮屏幕，到做出自己的触摸与无线应用。用现有案例理解编译、调试和验证，再把同一套方法交给 AI 一起开发。</p>
+<ul class="cover-list"><li>入门 · 烧录、日志、修改一个真实例程</li>
+<li>项目 · 联网、持久化、案例选择</li><li>进阶 · 图传测量、AI 任务单与验收</li></ul>
+<div class="print-content" style="display:none"><h2>课程目录</h2><ol><li><a href="#chapter-01">认识板子</a></li><li><a href="#chapter-02">首次点亮与恢复</a></li><li><a href="#chapter-03">编译第一个应用</a></li><li><a href="#chapter-04">从例程到新应用</a></li><li><a href="#chapter-05">已有应用怎么学</a></li><li><a href="#chapter-06">联网、账号与保存</a></li><li><a href="#chapter-07">视频案例 · 从收到帧到真的出画</a></li><li><a href="#chapter-08">用 AI 和资料包一起开发</a></li><li><a href="#chapter-09">开发过程与验收</a></li></ol></div></section>
+<article class="chapter" id="chapter-01"><header><div class="kicker">课程 01</div><h1>认识板子</h1></header><p>从点亮屏幕到独立开发应用。课程以 KSDIY F101S3 4.3 英寸开发板为例，全程记录芯片、屏幕、镜像版本和验证结果。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>教学基线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>处理器与存储</td>
+<td>F101S3，16 MB PSRAM，16 MB SPI NOR</td>
+</tr>
+<tr>
+<td>显示与触控</td>
+<td>ST7102 MIPI 480×800，ST7123。横屏逻辑分辨率 800×480</td>
+</tr>
+<tr>
+<td>调试与无线</td>
+<td>UART4，PD6 TX、PD7 RX，115200 8N1。选配 AIC8800D40L</td>
+</tr>
+<tr>
+<td>电源与音频</td>
+<td>参考板使用 AXP2101，短按 PWRON 可息屏／唤醒。供电和音频端口看随板标注</td>
+</tr>
+</tbody>
+</table>
+<p>准备数据线、Windows 电脑、随板说明、对应 IMG 和烧录工具。串口为可选项。连接串口前确认板上电平和端子定义，共地并交叉连接 TX/RX。上电和 FEL 操作以随板的板卡图为准。</p>
+<table>
+<thead>
+<tr>
+<th>学习顺序</th>
+<th>完成后能展示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01–03 · 入门</td>
+<td>上电、烧录、记录日志，修改一处 UI 后打包</td>
+</tr>
+<tr>
+<td>04–05 · 项目</td>
+<td>选一个本地或无线应用，写出输入、状态和验收项</td>
+</tr>
+<tr>
+<td>06–09 · 进阶</td>
+<td>排查 Wi‑Fi/TLS，定位图传瓶颈，让 AI 协助复现和修复</td>
+</tr>
+</tbody>
+</table>
+<p>F101S4 的 32 MB PSRAM、供电与初始化需要独立验证。7 英寸和 10.1 英寸屏也要分别校验屏参、触摸坐标、刷新与缓冲开销。这些规格尚未列入本教学基线。</p></article><article class="chapter" id="chapter-02"><header><div class="kicker">课程 02</div><h1>首次点亮与恢复</h1></header><h2>先确认 USB 设备在哪个阶段</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>去哪里看</th>
+<th>能证明什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FEL</td>
+<td>OpenixSuit 设备列表</td>
+<td>Boot ROM 正在等待装载，可用于写入适配 IMG</td>
+</tr>
+<tr>
+<td>RTOS 正常启动</td>
+<td>屏幕、启动串口、适用应用的 ADB</td>
+<td>已进入应用，可继续检查触摸、网络和日志</td>
+</tr>
+<tr>
+<td>USB 副屏运行中</td>
+<td>副屏 USB 接口和发送端</td>
+<td>镜像使用自己的 USB 功能，调试用串口</td>
+</tr>
+</tbody>
+</table>
+<h2>操作卡</h2>
+<ol>
+<li>写下板号、芯片、屏型号、Flash 类型与镜像版本。如果板已预烧录，先正常上电确认启动、触摸和亮度，记下出厂基线。可先做「实验／读启动日志」。</li>
+<li>取得随板镜像及 SHA-256，运行附带校验脚本。使用随板工具版本，按板卡说明进入 FEL，确认设备就绪，再选择对应 IMG。</li>
+<li>首次安装使用该镜像说明指定的模式。跨应用切换前考虑备份。已有配网、登录资料时，先检查升级包分区清单及 UDISK 是否会写入，再选择保留数据升级。</li>
+<li>等工具确认完成后正常重新上电。记录开机版本、分辨率、触摸是否于四角正常。使用 ADB 的应用可运行：</li>
+</ol>
+<pre><code class="language-text">adb devices -l
+adb shell logcat
+</code></pre>
+<p>logcat 仅适用于提供该命令的镜像。遇到空列表，先区分数据线、FEL 残留、USB 功能差异和应用启动状态。串口日志可作为旁路。停在 DRAM 初始化时先复核镜像、硬件和启动参数。写入失败时记录最后成功阶段，再用同板型已验收镜像恢复。</p></article><article class="chapter" id="chapter-03"><header><div class="kicker">课程 03</div><h1>编译第一个应用</h1></header><h2>先跑通原版</h2>
+<p>使用 WSL2 的 Ubuntu 24.04 或发布方指定的已验证环境。将 SDK 解压到 Linux 文件系统，例如 ~/f101/sdk。SDK 依赖大小写文件名、软链接、玄铁交叉工具链和可执行的 32 位 x86 打包工具。在取得匹配的 SDK、获准使用的 KSDIY 项目和随版依赖说明后，运行：</p>
+<pre><code class="language-bash">cd ~/f101/sdk
+test -L envsetup.sh
+test -f lichee/rtos/projects/f101s3/ksdiy_f101s3/tools/build_all_apps.py
+source envsetup.sh
+lunch_rtos f101s3_ksdiy_f101s3
+python3 &quot;教学包实际路径/工具/编译木鱼.py&quot; \
+  --sdk ~/f101/sdk \
+  --config &quot;教学包实际路径/工具/wooden_fish.defconfig&quot; \
+  --out &quot;$HOME/f101-out/wooden-fish-base&quot;
+</code></pre>
+<p>把「教学包实际路径」换成解压后的 Linux 路径。--out 必须指向新目录。教学包附木鱼配置，仍需要随板提供的匹配 SDK 快照。脚本完成后检查 manifest.json、IMG 和 SHA-256。失败时先看 wooden_fish.build.log 或 wooden_fish.pack.log。当前开发树用通用批量脚本全清后出现过 SDMMC 重复定义，入门时使用匹配的发布基线与上面的单应用构建流程。</p>
+<h2>第一处修改</h2>
+<p>从工程根目录打开 src/app/apps/wooden_fish/Pages/Fish/Fish.c，在 ui_create_page_header 找到页面副标题，换成自己的短句。需要双语时一并补 src/app/Model/app_i18n.c 词条。用不同的 --out 再打包，确认新哈希与旧包不同，上板检查新文案、触摸敲击与计数。</p>
+<p>附带的按键计数实验可先在电脑上完成。请保留原版 IMG 作为恢复版本。</p></article><article class="chapter" id="chapter-04"><header><div class="kicker">课程 04</div><h1>从例程到新应用</h1></header><h2>沿着一次触摸找到代码</h2>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>从哪里看</th>
+<th>练习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>应用入口</td>
+<td>App_f101.c、app_shell_cfg.c</td>
+<td>找到启动路径与页面注册</td>
+</tr>
+<tr>
+<td>页面事件</td>
+<td>apps/wooden_fish/Pages/Fish/Fish.c</td>
+<td>找到触摸如何变成敲击，界面如何更新</td>
+</tr>
+<tr>
+<td>状态与保存</td>
+<td>apps/wooden_fish/Model/、Model/settings.c</td>
+<td>标出显示状态和持久化各自的所有者</td>
+</tr>
+<tr>
+<td>硬件与配置</td>
+<td>HAL/、工程 defconfig、board/f101s3/ksdiy_f101s3/configs/</td>
+<td>找脚位、驱动开关和打包配置</td>
+</tr>
+<tr>
+<td>跨线程</td>
+<td>Common/ui_dispatch.c、Model/data_bridge.c</td>
+<td>将后台结果交回 UI 线程渲染</td>
+</tr>
+</tbody>
+</table>
+<p>应用文件位于工程的 src/app/。board/ 是 SDK 根目录下的板级配置。</p>
+<h2>小项目 · 桌面计数器</h2>
+<p>用附送的 C 实验处理按住只计一次、释放再按、清零与计数上限。随后在现有例程上加计数显示和清零按钮。把网络调用、文件写入和长运算移到应用工作任务，UI 线程负责显示状态与处理用户输入。</p>
+<p>验收时提交上电、一次长按、连续三次独立点击、清零四组记录。选做保存时增加完整断电后的回读证据。写入失败时应能继续使用本轮内存状态，并明确提示。</p>
+<p>画板与泡泡纸适合练触摸与局部刷新。时钟与老黄历适合练定时更新。钢琴与木鱼适合练音频队列。保留窄屏和横屏的验收，检查长中文和百分号在边缘是否被裁掉。</p></article><article class="chapter" id="chapter-05"><header><div class="kicker">课程 05</div><h1>已有应用怎么学</h1></header><p>同一应用可能有早期实测版与较新的编译版。烧录时以索引中的具体版本为准。</p>
+<table>
+<thead>
+<tr>
+<th>案例</th>
+<th>可学习的内容</th>
+<th>验证边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>木鱼、画板、时钟、钢琴等</td>
+<td>LVGL、触摸、定时、音频和持久化</td>
+<td>有批量构建记录。SKU 实测按索引</td>
+</tr>
+<tr>
+<td>TF 卡 MP4 播放器</td>
+<td>本地文件、硬解、旋转、HP/PA 音频</td>
+<td>S3 有独立镜像。S4 降频恢复曾出画出声，60 fps 同步未验收</td>
+</tr>
+<tr>
+<td>Action 6 无线监看</td>
+<td>BLE 授权、热点、图传、参数回读</td>
+<td>R16 实测图传，R17 实测规格和 EV。后续菜单版通过编译和主机回归。多机型扩展待完成</td>
+</tr>
+<tr>
+<td>Android 手机副屏</td>
+<td>同一 Wi‑Fi 内的 H.264 镜像</td>
+<td>R1 小米 14 竖屏有画面，使用发送 APK。音频和回控见 Miracast</td>
+</tr>
+<tr>
+<td>Miracast M10</td>
+<td>系统投屏、LPCM 连续播放、UIBC 回控</td>
+<td>小米 14 实测画面、声音及触控。其他机型和长期稳定性待扩测</td>
+</tr>
+<tr>
+<td>拓竹屏、米家屏</td>
+<td>公网授权、断电恢复、分页、异步 UI</td>
+<td>拓竹已测单台 P1P，多台真实设备待测。公网状态与 LAN 相机和文件应分别验收。米家覆盖按账号与设备核对</td>
+</tr>
+<tr>
+<td>收音机、无线仪表台</td>
+<td>HLS、音频增益、Wi‑Fi/BLE 扫描 UI</td>
+<td>收音机 R5 有编译打包证据。无线仪表台的实机扫描待验证</td>
+</tr>
+</tbody>
+</table>
+<p>用与手头设备匹配的版本演示。需要授权的案例使用自己的账号和设备，演示视频和课件使用脱敏日志。</p></article><article class="chapter" id="chapter-06"><header><div class="kicker">课程 06</div><h1>联网、账号与保存</h1></header><h2>逐层排查 Wi‑Fi</h2>
+<p>从一个已经正常启动的镜像开始，依次记录 SDIO 初始化、驱动就绪、扫描、关联、DHCP、对时、TLS、业务登录。每层留下一个标志日志或错误码。连上热点但没 IP 时先检查 DHCP。TLS 因时钟失败时，先核对对时与 DNS，再定位认证。</p>
+<h2>完整断电验证保存</h2>
+<ol>
+<li>使用自己的测试网络和授权账号，完成首次连接或登录。</li>
+<li>确认文件系统已挂载且保存成功，只记录存在性和校验结论。</li>
+<li>断开屏幕板供电和 USB，重新上电，观察自动联网、会话恢复和设备列表。</li>
+<li>单独测试升级保持。对照新旧分区地址与大小、镜像实际下载分区表，再记录升级前后的保留结果。一次冷启动通过只证明该次保存和加载生效。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>核对方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公网有状态，首页显示离线</td>
+<td>分开定义 Wi‑Fi、云会话、打印机状态，检查当前选中设备的 ID</td>
+</tr>
+<tr>
+<td>相机或存储没有数据</td>
+<td>检查云端列表是否完成，是否匹配到同一台设备的局域网地址与认证</td>
+</tr>
+<tr>
+<td>设备已执行，按钮还显示旧状态</td>
+<td>分清下发、应答和回读。超时保留最后确认的值并给出提示</td>
+</tr>
+</tbody>
+</table>
+<p>拓竹案例可用只读状态、相机和文件列表完成。公网控制权限、局域网开发者模式与打印机型号分别验收。</p></article><article class="chapter" id="chapter-07"><header><div class="kicker">课程 07</div><h1>视频案例 · 从收到帧到真的出画</h1></header><p>网络分片经过完整访问单元、硬解帧、G2D 转换、LVGL 绘制，最终翻页。每个阶段都有自己的计数。采样注明镜像、分辨率、方向和场景。</p>
+<table>
+<thead>
+<tr>
+<th>症状</th>
+<th>第一组对照</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>纯绿屏</td>
+<td>对同一解码帧做 CPU 与 G2D 对照，核对 NV12、stride、裁剪、DMA 地址、缓存和色彩范围</td>
+</tr>
+<tr>
+<td>运动时花屏</td>
+<td>查丢片、乱序和重复包，受损参考链等待关键帧恢复</td>
+</tr>
+<tr>
+<td>整屏闪</td>
+<td>暂停更新对照，核对帧所有权与转换完成时机，再比较翻页方式</td>
+</tr>
+<tr>
+<td>延迟增大</td>
+<td>同时看压缩队列、解码帧池和 UI 积压，UI 跟不上时优先跳过展示</td>
+</tr>
+<tr>
+<td>切换或重连异常</td>
+<td>等接收、解码与显示消费者完成后再释放共享缓冲</td>
+</tr>
+</tbody>
+</table>
+<p>Action 6 R16 的 60.19 秒横屏样本中，解码约 29.97 fps，绘制约 21.75 fps，完成翻页约 21.73 fps。三轮重连后的 30.08 秒样本完成翻页约 22.08 fps。曾出现一次视频停止、控制仍在线，根因未定。数据只代表当时的镜像和测试条件。</p>
+<p>打开「实验/图传帧率」，用只读分析器复算实测样本。复制样本后把其中一个累计计数改为回退，观察工具如何排除无效区间。作业交出解码、绘制、完成翻页三个指标，说明哪一个回答「屏幕实际有多快」。</p></article><article class="chapter" id="chapter-08"><header><div class="kicker">课程 08</div><h1>用 AI 和资料包一起开发</h1></header><p>把「AI协作/F101项目上下文.md」、任务模板、相关课程和工程的少量相关源码放进 AI 工作区。指出真实 SDK 根目录，并说明 AI 能否读取。使用稳定版本创建可回滚的工作副本。</p>
+<ol>
+<li><strong>先定位。</strong> 提供板型、固件哈希、操作顺序和覆盖失败点的脱敏日志。让 AI 标出代码位置和证据。</li>
+<li><strong>一次解决一个问题。</strong> 指定验收门槛。优先复用现有 API，从可回滚的小改动开始。运行烧录命令前核对目标板、分区和恢复包。</li>
+<li><strong>分开跑验证。</strong> 先主机、再编译打包、再上板。让 AI 保留命令、SHA-256、实机数据和待测项。</li>
+<li><strong>记录失败。</strong> 当帧率没改善时，先确认测的是收到、解码、绘制还是翻页。保留成功与失败样本和回退办法。</li>
+</ol>
+<h2>可以直接复制的任务</h2>
+<blockquote>
+<p>这块板是 F101S3 / 4.3 英寸触摸屏。用资料包找到木鱼页面的触摸入口。先列出页面、模型和保存路径，再增加清零按钮。清零后界面应立即更新。先跑主机验证，输出变更文件和单应用构建命令。保留旧 IMG 供回退。</p>
+</blockquote>
+<p>另一个练习是给 Wi‑Fi 页面增加「等待获取 IP」和「正在校时」两种反馈。用日志说明目前卡在哪一层。Wi‑Fi 密码、二维码令牌、访问码和 /data 完整备份保存在本机私有目录。</p></article><article class="chapter" id="chapter-09"><header><div class="kicker">课程 09</div><h1>开发过程与验收</h1></header><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>已解决或验证的内容</th>
+<th>对应学习点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境与启动</td>
+<td>WSL 原生构建、FEL、UART4/ADB、16 MB NOR 出包</td>
+<td>配置区分、编译日志、镜像一致性</td>
+</tr>
+<tr>
+<td>多应用与屏幕</td>
+<td>LVGL 多应用框架、横竖屏、MIPI 触摸、共享状态栏</td>
+<td>布局、资源生命周期、旋转</td>
+</tr>
+<tr>
+<td>联网与音频</td>
+<td>AIC8800D40L Wi‑Fi/BLE、开机播报、触摸提示音、PWM 息屏</td>
+<td>网络分层、音频队列、电源事件</td>
+</tr>
+<tr>
+<td>视频进阶</td>
+<td>Action 6 的内存、绿屏、花屏和帧率；Miracast 的配对、连续音频与回控</td>
+<td>实际翻页、数据所有权、重连</td>
+</tr>
+<tr>
+<td>可交付应用</td>
+<td>拓竹云与局域网功能、米家登录保存、手机投屏</td>
+<td>存储升级、状态回读、功能矩阵</td>
+</tr>
+</tbody>
+</table>
+<h2>每次交作业都写这六项</h2>
+<p>板型与屏幕、镜像与哈希、修改点、操作步骤、量化结果、待验证项。用真实设备反馈和板端日志交叉确认，并标出主机、板端和用户确认三种证据来源。</p>
+<p>新增 SKU 时，用同一张表覆盖首次烧录、四角触摸、横竖屏、冷启动、配网、音量和恢复。跨屏尺寸记录实际耗时与内存。产品例程按实测边界展示，教学案例保留可复盘的已知故障。</p></article><footer>KSDIY F101 教学包 v1.0 · 2026-11-21</footer></main></div></body></html>

@@ -1,0 +1,84 @@
+{
+  "case": "F101S3 Action6 native H264 landscape preview R16",
+  "date": "2026-11-11",
+  "image_sha256": "f0b6bfbd5c6b7fdccae36f62c753a2a8fdd1ffbc9b8587e0eac2f5bc72d97cf5",
+  "image_bytes": 8409088,
+  "bootpkg_bytes": 2998272,
+  "continuous_60s": {
+    "seconds": 60.187999999994645,
+    "drawn_fps": 21.748521299928832,
+    "pan_fps": 21.73190669236586,
+    "decoded_fps": 29.972752043599396,
+    "errors_delta": 0,
+    "feed_failures_delta": 0,
+    "dropped_delta": 0,
+    "min_free_heap": 277120,
+    "per_interval": [
+      {
+        "seconds": 10.031000000002678,
+        "drawn_fps": 22.430465556768013,
+        "pan_fps": 22.330774598737932
+      },
+      {
+        "seconds": 10.031999999991967,
+        "drawn_fps": 21.929824561421068,
+        "pan_fps": 21.929824561421068
+      },
+      {
+        "seconds": 10.031000000002678,
+        "drawn_fps": 21.932010766617612,
+        "pan_fps": 22.031701724647693
+      },
+      {
+        "seconds": 10.01600000000326,
+        "drawn_fps": 21.765175718842755,
+        "pan_fps": 21.765175718842755
+      },
+      {
+        "seconds": 10.046000000002095,
+        "drawn_fps": 21.501094963164935,
+        "pan_fps": 21.501094963164935
+      },
+      {
+        "seconds": 10.031999999991967,
+        "drawn_fps": 20.933014354083745,
+        "pan_fps": 20.833333333350016
+      }
+    ]
+  },
+  "after_three_reconnects_30s": {
+    "seconds": 30.077999999994063,
+    "drawn_fps": 22.07593589999771,
+    "pan_fps": 22.07593589999771,
+    "decoded_fps": 29.955449165508938,
+    "errors_delta": 0,
+    "feed_failures_delta": 0,
+    "dropped_delta": 0,
+    "min_free_heap": 267104,
+    "cache_bytes": 17472
+  },
+  "stop_reconnect_cycles_passed": 3,
+  "policies": {
+    "pace": 1,
+    "reuse": 1,
+    "icons": 1,
+    "copy": 0,
+    "pan": 1
+  },
+  "visual_confirmation": "User confirmed moving image without flashing or tearing, subjective low latency and transparent buttons.",
+  "initial_stall": {
+    "observed": true,
+    "video_aus_froze_at": 599,
+    "control_traffic_continued": true,
+    "decoder_backlog": 0,
+    "decoder_errors": 0,
+    "recovery": "one explicit disconnect/saved reconnect restored video",
+    "cause": "not determined",
+    "recurrence": "not observed during subsequent continuous sample, three stop/reconnect cycles and final sample"
+  },
+  "limits": [
+    "No instrumented end-to-end latency measurement.",
+    "No long-duration stability guarantee; isolated initial stop remains unrooted.",
+    "Sustained FPS in other orientations remains unverified."
+  ]
+}

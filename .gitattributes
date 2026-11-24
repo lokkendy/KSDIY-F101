@@ -1,0 +1,22 @@
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.SchDoc binary
+*.PcbDoc binary
+*.SchLib binary
+*.PcbLib binary
+*.PrjPcb -text
+*.PrjPcbStructure -text
+*.OutJob -text
+*.pdf binary
+*.xlsx binary
+*.zip binary
+*.png binary
+*.stl binary
+*.step binary
+*.f3d binary
+*.jar binary
+*.bin binary
+*.img binary

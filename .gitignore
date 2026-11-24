@@ -1,0 +1,36 @@
+# Local SDKs, proprietary or unconfirmed assets, and board images
+/firmware/sdk/
+/firmware/local-assets/
+/firmware/images/local/
+/firmware/build/
+local.properties
+*.jks
+*.keystore
+.env
+.env.*
+!.env.example
+
+# Altium-generated working files
+History/
+__Previews/
+Project Logs for */
+Project Outputs for */
+*.PrjPcbVariants
+*.PcbDocPreview
+*.SchDocPreview
+*.lck
+
+# Build outputs and editor/caches
+**/.gradle/
+**/build/
+**/__pycache__/
+*.py[cod]
+*.elf
+*.map
+*.img
+!/firmware/images/*/*.img
+*.apk
+*.o
+*.log
+.DS_Store
+Thumbs.db

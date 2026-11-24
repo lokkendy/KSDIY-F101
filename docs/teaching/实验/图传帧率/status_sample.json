@@ -1,0 +1,30 @@
+[
+  {
+    "time": 0.0,
+    "raw": "[video] frames=803 errors=0 dropped=0 free=285840 min=281536\n[video async] decoded=1141 converted=804 submitted=804 drawn=803\n[display perf] pans=2847\n[video path] feed_fail=0\n[transport] aus=543 video_packets=2222\n[video backlog] sbm_bytes=0 sbm_frames=0\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  },
+  {
+    "time": 10.031000000002678,
+    "raw": "[video] frames=1028 errors=0 dropped=0 free=288368 min=281536\n[video async] decoded=1442 converted=1029 submitted=1029 drawn=1028\n[display perf] pans=3071\n[video path] feed_fail=0\n[transport] aus=844 video_packets=3418\n[video backlog] sbm_bytes=5011 sbm_frames=1\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  },
+  {
+    "time": 20.062999999994645,
+    "raw": "[video] frames=1248 errors=0 dropped=0 free=284944 min=280640\n[video async] decoded=1743 converted=1248 submitted=1248 drawn=1248\n[display perf] pans=3291\n[video path] feed_fail=0\n[transport] aus=1145 video_packets=4815\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  },
+  {
+    "time": 30.093999999997322,
+    "raw": "[video] frames=1468 errors=0 dropped=0 free=281648 min=280640\n[video async] decoded=2043 converted=1469 submitted=1469 drawn=1468\n[display perf] pans=3512\n[video path] feed_fail=0\n[transport] aus=1445 video_packets=6192\n[video backlog] sbm_bytes=0 sbm_frames=0\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  },
+  {
+    "time": 40.11000000000058,
+    "raw": "[video] frames=1686 errors=0 dropped=0 free=306304 min=277344\n[video async] decoded=2344 converted=1687 submitted=1687 drawn=1686\n[display perf] pans=3730\n[video path] feed_fail=0\n[transport] aus=1746 video_packets=7564\n[video backlog] sbm_bytes=5754 sbm_frames=1\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  },
+  {
+    "time": 50.15600000000268,
+    "raw": "[video] frames=1902 errors=0 dropped=0 free=288128 min=277120\n[video async] decoded=2644 converted=1903 submitted=1903 drawn=1902\n[display perf] pans=3946\n[video path] feed_fail=0\n[transport] aus=2046 video_packets=9216\n[video backlog] sbm_bytes=0 sbm_frames=0\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  },
+  {
+    "time": 60.187999999994645,
+    "raw": "[video] frames=2112 errors=0 dropped=0 free=284944 min=277120\n[video async] decoded=2945 converted=2112 submitted=2112 drawn=2112\n[display perf] pans=4155\n[video path] feed_fail=0\n[transport] aus=2347 video_packets=11788\n[video recovery] generation=3\n[osmo] state=9 link=3"
+  }
+]

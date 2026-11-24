@@ -1,0 +1,24 @@
+﻿F101S3_KSDIY_V2 制造文件
+
+由 Altium Designer 26.7.1 通过 AD MCP 重新生成，原生文件时间：2026-11-17 18:22（北京时间）。
+
+制板：上传 F101S3_KSDIY_V2_Gerber_Drill_20261117.zip，包含双层 Gerber、板框及圆孔/槽孔/矩形孔钻孔文件。
+板外形包络尺寸：66.2 × 73.25 mm；铜层数：2。
+
+BOM：Assembly/F101S3_KSDIY_V2_BOM.csv，71 组，共 152 个元件。
+逐件明细：Assembly/F101S3_KSDIY_V2_BOM_Detail.csv。
+坐标：Assembly/F101S3_KSDIY_V2_CPL_mm.csv，152 个元件，单位 mm。
+原生坐标：Native/Pick Place for F101S3_KSDIY_V2.txt，单位 mil。
+
+坐标 CSV 采用 AD 原生导出的 Center-X/Y，按 1 mil = 0.0254 mm 转换，保留 AD 顶/底面和旋转角度。
+Gerber、钻孔和坐标沿用工程相对原点；当前原点为 (0,0)。
+有 13 个封装的中心与封装原点不同，因此没有用通用 MCP 的原点坐标代替 AD 中心坐标。
+
+工程已有立创料号：17 个元件；缺少立创料号：135 个元件，保持空白，没有代选物料。
+Comment 标为 NC 的 8 个元件原样保留：C5, C53, D6, D7, D8, D9, R107, R108。贴装前需确认是否不贴。
+空 Comment、原始厂家型号及其他参数均保留在 BOM 明细中。
+BOM 和坐标的位号集合均与当前 PCB 的 152 个元件完全一致。
+
+Native/ 为 AD 实际生成的原始文件；Export_Verification.json 记录文件校验和、元件数量和缺失料号。
+本次为导出及文件结构检查，不代表完整 DRC 或选料审核通过。
+原理图与 PCB 内容未修改；工程中新增了 F101S3_KSDIY_V2_Manufacturing.OutJob，便于后续重复导出。
