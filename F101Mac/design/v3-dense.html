@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F101 Mac 高密度草圖</title>
+<style>
+  :root {
+    --bg:#141414; --bar:#1C1C1C; --card:#232323; --hi:#303030;
+    --pri:#00AE42; --danger:#E54B4B; --warn:#F09A17;
+    --text:#F2F2F2; --sec:#A3A3A3; --border:#383838; --track:#3A3A3A;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#0b0b0b; color:var(--text); padding:20px 16px 40px;
+    font:12px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", sans-serif;
+    font-variant-numeric: tabular-nums; }
+  h1 { font-size:17px; margin:0 0 4px; }
+  .note { color:var(--sec); margin:0 0 14px; max-width:760px; font-size:12px; }
+  .label { color:var(--sec); margin:22px 0 6px; }
+  .sim { font-size:10px; color:var(--warn); border:1px solid var(--warn); border-radius:4px; padding:0 4px; margin-left:6px; }
+  .ann { color:var(--sec); margin:6px 0 0; max-width:720px; }
+  .ann b { color:var(--text); }
+  .menubar { width:720px; height:24px; background:#2a2a2a; border-radius:6px; display:flex; align-items:center;
+    justify-content:flex-end; gap:12px; padding:0 10px; color:#ddd; }
+  .mb { padding:1px 6px; border-radius:4px; display:flex; gap:4px; align-items:center; }
+  .mb.on { background:#4a4a4a; }
+
+  .panel { width:720px; height:400px; background:var(--bg); border-radius:12px; overflow:hidden; position:relative;
+    border:1px solid #2c2c2c; display:grid; grid-template-rows:30px 1fr; }
+  .status { background:var(--bar); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:7px; padding:0 8px 0 10px; }
+  .status b { font-size:13px; }
+  .status .sp { flex:1; }
+  .sbtn { background:var(--hi); border-radius:5px; padding:2px 7px; font-size:11px; white-space:nowrap; }
+  .body { display:grid; grid-template-columns:54px 1fr; min-height:0; }
+  .rail { background:var(--bar); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:4px 3px; gap:2px; }
+  .tab { position:relative; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    color:var(--sec); font-size:10px; border-radius:8px; }
+  .tab svg { width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.7; }
+  .tab.on { color:var(--pri); background:rgba(0,174,66,.09); }
+  .tab.on::before { content:""; position:absolute; left:1px; top:50%; width:3px; height:16px; margin-top:-8px; background:var(--pri); border-radius:2px; }
+  .content { padding:6px; min-height:0; min-width:0; }
+  .card { background:var(--card); border-radius:8px; padding:6px 8px; min-width:0; }
+  .btn { background:var(--hi); border-radius:6px; padding:3px 8px; display:inline-flex; align-items:center; justify-content:center; gap:4px; white-space:nowrap; font-size:12px; }
+  .btn.pri { background:var(--pri); color:#fff; font-weight:600; }
+  .btn.dl { background:transparent; border:1.5px solid var(--danger); color:var(--danger); font-weight:600; }
+  .btn.off { color:#666; }
+  .sec { color:var(--sec); }
+  .g { color:var(--pri); }
+  .dot { width:7px; height:7px; border-radius:50%; display:inline-block; background:var(--pri); }
+  .track { height:5px; background:var(--track); border-radius:3px; overflow:hidden; }
+  .fill { height:100%; background:var(--pri); }
+  .kv { display:grid; grid-template-columns:auto 1fr; gap:3px 8px; }
+  .kv span:nth-child(odd) { color:var(--sec); }
+  .kv span:nth-child(even) { text-align:right; }
+  .num { font-weight:700; }
+  svg.i { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.7; }
+
+  /* home */
+  .home { display:grid; grid-template-columns:29% 1fr; gap:6px; height:100%; }
+  .dev { display:flex; flex-direction:column; gap:5px; }
+  .art { flex:1; min-height:96px; background:var(--hi); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#777; flex:none; }
+  .ws { display:grid; grid-template-rows:auto auto auto 1fr; gap:6px; min-height:0; }
+  .job { display:grid; grid-template-columns:84px 1fr; gap:8px; }
+  .cover { height:84px; background:var(--hi); border-radius:6px; }
+  .temps { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  .temp { padding:5px 8px; }
+  .temp .v { font-size:17px; font-weight:700; }
+  .temp .track { margin-top:4px; }
+  .quick { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+  .quick .btn { padding:6px 4px; }
+  .ams { flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  .slot { background:var(--hi); border-radius:6px; padding:6px; display:flex; flex-direction:column; gap:4px; justify-content:space-between; }
+  .slot .sw { width:100%; height:auto; flex:1; min-height:14px; }
+  .sw { width:14px; height:14px; border-radius:4px; flex:none; }
+  .slot.on { outline:1.5px solid var(--pri); }
+
+  /* camera */
+  .cam { display:grid; grid-template-columns:1fr 196px; gap:6px; height:100%; min-height:0; }
+  .camL { display:grid; grid-template-rows:1fr auto; gap:6px; min-height:0; }
+  .stage { border-radius:8px; position:relative; background:repeating-linear-gradient(45deg,#151515 0 10px,#1b1b1b 10px 20px); }
+  .stage .h { position:absolute; top:5px; left:8px; right:8px; display:flex; justify-content:space-between; }
+  .stage .m { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#777; }
+  .acts4 { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  .acts4 .btn { padding:5px; }
+  .camR { display:flex; flex-direction:column; gap:6px; min-height:0; }
+  .camR .temps { gap:4px; flex:1; }
+  .camR .temp { display:flex; flex-direction:column; justify-content:center; }
+  .camR .temp .v { font-size:18px !important; }
+  .camR .temp { padding:4px 5px; }
+  .camR .temp .v { font-size:13px; }
+
+  /* control */
+  .ctl { display:grid; grid-template-columns:58fr 42fr; gap:6px; height:100%; min-height:0; }
+  .ctlL { display:grid; grid-template-rows:auto 1fr auto auto; gap:6px; }
+  .seg { display:flex; background:var(--hi); border-radius:6px; padding:2px; gap:2px; }
+  .seg span { flex:1; text-align:center; padding:2px 0; border-radius:4px; color:var(--sec); }
+  .seg span.on { background:var(--pri); color:#fff; font-weight:600; }
+  .pad { display:grid; grid-template-columns:repeat(3,1fr) 10px 1fr; grid-template-rows:repeat(3,1fr); gap:5px; }
+  .k { background:var(--hi); border-radius:7px; display:flex; align-items:center; justify-content:center; color:#666; font-size:14px; }
+  .k.h { color:var(--pri); opacity:.55; }
+  .xyz { display:flex; justify-content:space-between; padding:0 4px; }
+  .ops { display:grid; grid-template-columns:1fr 1fr 1.2fr 1.2fr; gap:5px; }
+  .ops .btn { padding:5px; }
+  .ctlR { display:flex; flex-direction:column; gap:4px; min-height:0; }
+  .ctlR .r { flex:1; }
+  .r { background:var(--card); border-radius:7px; padding:4px 7px; display:flex; align-items:center; gap:5px; }
+  .r .t { font-weight:600; width:30px; flex:none; }
+  .ch { flex:1; display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:3px; }
+  .ch span { background:var(--hi); border-radius:4px; text-align:center; padding:2px 0; font-size:11px; }
+  .ch span.on { outline:1.5px solid var(--pri); color:var(--pri); font-weight:600; }
+  .pm { background:var(--hi); border-radius:4px; padding:1px 6px; }
+  .v2 { width:40px; text-align:center; font-weight:700; }
+
+  .scrim { position:absolute; inset:30px 0 0 54px; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; }
+  .confirm { width:280px; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px; }
+  .confirm h3 { margin:0 0 4px; font-size:14px; }
+  .confirm .a { display:flex; gap:6px; justify-content:flex-end; margin-top:10px; }
+</style>
+</head>
+<body>
+<h1>F101 Mac 選單列面板 · 高密度草圖 v3（未定稿）</h1>
+<p class="note">回應主人「盡量不要留白」。畫布 720×400 pt；狀態列 30、導航 54、內容外距 6、卡片間距 6。原有空白改放已有的資料（層數、時間、速度、AMS），不新增控制功能。全部數值為<b>模擬</b>。</p>
+
+<div class="label">選單列（仍待確認：打印中顯示進度 %）<span class="sim">模擬</span></div>
+<div class="menubar"><span class="mb">Wi-Fi</span><span class="mb on">🖨 42%</span><span class="mb">🖨 <span class="dot" style="background:var(--warn)"></span> 暫停</span><span class="mb">🖨 <span class="dot" style="background:var(--danger)"></span> 錯誤</span><span class="mb">🖨 待機</span><span class="mb">週三 14:23</span></div>
+
+<template id="rail"><nav class="rail">
+  <div class="tab" data-k="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H5v-9"/></svg>設備</div>
+  <div class="tab" data-k="files"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/></svg>存儲</div>
+  <div class="tab" data-k="hist"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h14"/></svg>記錄</div>
+  <div class="tab" data-k="cam"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>相機</div>
+  <div class="tab" data-k="set"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>設置</div>
+  <div class="tab" data-k="fil"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>耗材</div>
+</nav></template>
+
+<!-- HOME -->
+<div class="label">① 設備<span class="sim">模擬</span></div>
+<div class="panel">
+  <div class="status"><span class="dot"></span><b>A1 · 模擬打印機</b><span class="sec">在線 · 模擬</span><span class="sp"></span><span class="sbtn">多台總覽</span><span class="sbtn">拓竹雲監控</span><span class="sbtn">＋ 新增打印機</span></div>
+  <div class="body" data-rail="home"><div class="content"><div class="home">
+    <div class="card dev">
+      <div style="display:flex;align-items:center;gap:5px"><b style="flex:1">A1 · 模擬打印機</b></div>
+      <div class="g"><span class="dot"></span> 打印中 <span class="sec">· 標準速度</span></div>
+      <div class="art"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M7 7h10v8H7zM9 18h6"/></svg></div>
+      <div class="kv">
+        <span>序號</span><span>03W0••••12</span>
+        <span>IP</span><span>192.0.2.40</span>
+        <span>韌體</span><span>01.04.00</span>
+        <span>Wi-Fi</span><span>−52 dBm</span>
+        <span>腔燈</span><span>開</span>
+        <span>HMS</span><span class="g">正常</span>
+      </div>
+      <span class="btn">設備與 AMS</span>
+      <span class="btn">區網連線設定</span>
+    </div>
+    <div class="ws">
+      <div class="card job">
+        <div class="cover"></div>
+        <div style="min-width:0">
+          <div style="display:flex;align-items:center;gap:6px"><b style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">校準方塊.3mf</b><span class="btn"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>實時監控</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px"><span class="num g" style="font-size:24px">42%</span><span>剩餘 18 分</span><span class="sec">預計 14:41 完成</span></div>
+          <div class="track" style="margin:4px 0"><div class="fill" style="width:42%"></div></div>
+          <div style="display:flex;gap:12px" class="sec"><span>第 82 / 196 層</span><span>已用 13 分</span><span>PLA · 白</span></div>
+        </div>
+      </div>
+      <div class="temps">
+        <div class="card temp"><div class="sec">噴頭</div><div><span class="v">218</span> <span class="sec">/ 220 °C</span></div><div class="track"><div class="fill" style="width:99%"></div></div></div>
+        <div class="card temp"><div class="sec">熱床</div><div><span class="v">60</span> <span class="sec">/ 60 °C</span></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
+        <div class="card temp"><div class="sec">腔體</div><div><span class="v">32</span> <span class="sec">°C</span></div><div class="track"><div class="fill" style="width:32%;background:var(--sec)"></div></div></div>
+      </div>
+      <div class="quick">
+        <span class="btn">相機</span><span class="btn">設備存儲</span><span class="btn">控制</span><span class="btn">耗材</span><span class="btn">設置</span>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:5px;min-height:0">
+        <div style="display:flex"><b style="flex:1">AMS</b><span class="sec">濕度 2 級 · 26 °C</span></div>
+        <div class="ams">
+          <div class="slot on"><span class="sw" style="background:#f2f2f2"></span><div>A1 PLA<div class="sec">78%</div></div></div>
+          <div class="slot"><span class="sw" style="background:#111;border:1px solid #555"></span><div>A2 PLA<div class="sec">45%</div></div></div>
+          <div class="slot"><span class="sw" style="background:#e54b4b"></span><div>A3 PETG<div class="sec">90%</div></div></div>
+          <div class="slot"><span class="sw" style="background:transparent;border:1px dashed #666"></span><div class="sec">A4 空<div>&nbsp;</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div></div></div>
+</div>
+<p class="ann"><b>改動：</b>原作首頁的「設備」標題列與三個按鈕併入狀態列右側（省一整列）；左卡機型圖由撐滿改固定 96 pt，下方放設備資訊；任務卡加封面、預計完成時刻、層數、已用時間與耗材；溫度卡加目標與到溫條；快捷列變矮；原本的空白改放 AMS 四槽（原作「耗材」頁的資料，唯讀）。</p>
+
+<!-- CAMERA -->
+<div class="label">② 相機<span class="sim">模擬</span></div>
+<div class="panel">
+  <div class="status"><span class="dot"></span><b>A1 · 模擬打印機</b><span class="sec">在線 · 模擬</span><span class="sp"></span><span class="sec">更新 2 秒前</span></div>
+  <div class="body" data-rail="cam"><div class="content"><div class="cam">
+    <div class="camL">
+      <div class="stage"><div class="h"><span>A1 · 模擬打印機</span><span class="sec">實時畫面 · 1 fps</span></div><div class="m">模擬鏡頭測試圖</div></div>
+      <div class="acts4"><span class="btn off">拍照</span><span class="btn off">錄製</span><span class="btn off">燈光</span><span class="btn">全屏</span></div>
+    </div>
+    <div class="camR">
+      <div class="card" style="display:flex;gap:7px"><div style="width:46px;height:46px;background:var(--hi);border-radius:5px;flex:none"></div><div style="min-width:0"><b>校準方塊.3mf</b><div class="g">打印中</div><div class="sec">PLA · 白</div></div></div>
+      <div class="card">
+        <div style="display:flex;align-items:baseline;gap:6px"><span class="num g" style="font-size:22px">42%</span><span class="sp" style="flex:1"></span><span>剩餘 18 分</span></div>
+        <div class="track" style="margin:4px 0 5px"><div class="fill" style="width:42%"></div></div>
+        <div class="kv"><span>層數</span><span>82 / 196</span><span>已用</span><span>13 分</span><span>預計完成</span><span>14:41</span><span>速度</span><span>標準</span></div>
+      </div>
+      <div class="temps"><div class="card temp"><div class="sec">噴頭</div><div class="v">218</div><div class="sec">/220</div></div><div class="card temp"><div class="sec">熱床</div><div class="v">60</div><div class="sec">/60</div></div><div class="card temp"><div class="sec">腔體</div><div class="v">32</div><div class="sec">°C</div></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><span class="btn pri" style="padding:7px">暫停</span><span class="btn dl" style="padding:7px">停止</span></div>
+    </div>
+  </div></div></div>
+</div>
+<p class="ann"><b>改動：</b>鏡頭佔左側整高，四顆操作鈕縮成一列放鏡頭下；右欄補上層數、已用、預計完成、速度，原本暫停／停止上方的大片空白收掉，兩鈕加高方便按。</p>
+
+<!-- CONTROL -->
+<div class="label">③ 控制<span class="sim">模擬</span></div>
+<div class="panel">
+  <div class="status"><span class="sbtn">‹ 返回</span><b>控制</b><span class="sp"></span><span class="dot"></span><span class="sec">A1 · 在線 · 模擬 · 打印中</span></div>
+  <div class="body" data-rail="home"><div class="content"><div class="ctl">
+    <div class="card ctlL">
+      <div style="display:flex;align-items:center;gap:6px"><b>步距</b><div class="seg" style="flex:1"><span class="on">0.1</span><span>1</span><span>10 mm</span></div></div>
+      <div class="pad">
+        <span></span><span class="k">↑</span><span></span><span></span><span class="k">Z+</span>
+        <span class="k">←</span><span class="k h">⌂</span><span class="k">→</span><span></span><span class="k">Z−</span>
+        <span></span><span class="k">↓</span><span></span><span></span><span class="k h" style="font-size:11px">Z⌂</span>
+      </div>
+      <div class="xyz"><span>X <b>128.0</b></span><span>Y <b>128.0</b></span><span>Z <b>16.4</b></span><span class="sec">打印中禁止移軸</span></div>
+      <div class="ops"><span class="btn off">回零</span><span class="btn off">自動調平</span><span class="btn pri">暫停</span><span class="btn dl">停止</span></div>
+    </div>
+    <div class="ctlR">
+      <div class="r"><span class="t">擠出</span><div class="ch"><span style="color:#666">退料 10</span><span style="color:#666">進料 10</span></div></div>
+      <div class="r"><span class="t">噴頭</span><span class="pm">−</span><span class="v2">220°</span><span class="pm">+</span><span class="sec" style="flex:1;text-align:right">218°</span></div>
+      <div class="r" style="padding-top:2px"><span class="t"></span><div class="ch"><span>180</span><span>200</span><span class="on">220</span><span>240</span></div></div>
+      <div class="r"><span class="t">熱床</span><span class="pm">−</span><span class="v2">60°</span><span class="pm">+</span><span class="sec" style="flex:1;text-align:right">60°</span></div>
+      <div class="r" style="padding-top:2px"><span class="t"></span><div class="ch"><span>40</span><span class="on">60</span><span>80</span><span>100</span></div></div>
+      <div class="r"><span class="t">速度</span><div class="ch"><span>靜音</span><span class="on">標準</span><span>運動</span><span>狂暴</span></div></div>
+      <div class="r"><span class="t">模型</span><div class="ch"><span>0</span><span>25</span><span>50</span><span class="on">75</span><span>100</span></div></div>
+      <div class="r"><span class="t">輔助</span><div class="ch"><span class="on">0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div>
+      <div class="r"><span class="t">機箱</span><div class="ch"><span class="on">0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div>
+    </div>
+  </div></div></div>
+</div>
+<p class="ann"><b>改動：</b>方向盤按鍵隨左欄撐滿（按鍵約 50×58 pt，更好按），座標、限制提示、操作列各一列收在下方，左欄沒有空白；右欄原作的「目前狀態」併入狀態列，其餘照原作順序全部一頁放下（擠出、噴頭、熱床、速度、三路風扇），不用捲動；目標值旁加目前讀數。</p>
+
+<!-- CONFIRM -->
+<div class="label">④ 停止確認<span class="sim">模擬</span></div>
+<div class="panel">
+  <div class="status"><span class="dot"></span><b>A1 · 模擬打印機</b><span class="sec">在線 · 模擬</span></div>
+  <div class="body" data-rail="cam"><div class="content"></div></div>
+  <div class="scrim"><div class="confirm"><h3>停止打印？</h3><div class="sec">A1 · 模擬打印機 · 校準方塊.3mf · 42%</div><div class="sec" style="margin-top:4px">停止後無法繼續這次打印。</div><div class="a"><span class="btn">取消</span><span class="btn" style="background:var(--danger);color:#fff;font-weight:600">確認停止</span></div></div></div>
+</div>
+
+<script>
+  const t=document.getElementById('rail');
+  document.querySelectorAll('[data-rail]').forEach(b=>{const r=t.content.firstElementChild.cloneNode(true);r.querySelector(`[data-k="${b.dataset.rail}"]`)?.classList.add('on');b.prepend(r);});
+</script>
+</body>
+</html>

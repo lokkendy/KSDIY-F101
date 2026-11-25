@@ -116,6 +116,10 @@ def monitor(sock, config):
                     keys = ("gcode_state", "subtask_name", "gcode_file", "mc_percent", "mc_remaining_time",
                             "nozzle_temper", "bed_temper", "chamber_temper", "nozzle_target_temper", "bed_target_temper")
                     values = {k: status[k] for k in keys if isinstance(status.get(k), (str, int, float))}
+                    if "subtask_id" in status:
+                        task_id = status["subtask_id"]
+                        # Explicit empty or invalid IDs clear the previous ID; omitted fields stay unchanged.
+                        values["subtask_id"] = str(task_id) if type(task_id) in (str, int) else ""
                     # Omitted fields are unchanged for display. Only an explicit state
                     # report can renew command eligibility; invalid values revoke it.
                     if "gcode_state" in status:

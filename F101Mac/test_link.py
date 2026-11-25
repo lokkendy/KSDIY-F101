@@ -22,7 +22,7 @@ class ProtocolTest(unittest.TestCase):
         self.addCleanup(broker.close)
         serial = secrets.token_hex(6)
         report = link.field("device/" + serial + "/report")
-        status = {"gcode_state": "RUNNING", "mc_percent": 12}
+        status = {"gcode_state": "RUNNING", "mc_percent": 12, "subtask_id": "test-task"}
         broker.sendall(link.packet(32, bytes(2)) + link.packet(144, bytes([0, 1, 0]))
                        + link.packet(48, report + json.dumps({"print": status}).encode()))
         read_fd, write_fd = os.pipe()
@@ -33,7 +33,7 @@ class ProtocolTest(unittest.TestCase):
             with concurrent.futures.ThreadPoolExecutor() as pool:
                 monitor = pool.submit(link.monitor, transport, {"serial": serial, "code": secrets.token_hex(4)})
                 with os.fdopen(write_fd, "wb", buffering=0) as writer:
-                    writer.write(b"pause\nstop\n")
+                    writer.write(b"resume\npause\nstop\n")
                     self.assertEqual([link.receive(broker)[0] for _ in range(2)], [16, 130])
                     for group, expected in [("pushing", "pushall"), ("print", "pause"), ("print", "stop")]:
                         with self.subTest(command=expected):
@@ -43,6 +43,7 @@ class ProtocolTest(unittest.TestCase):
                             self.assertEqual(json.loads(body[len(topic):])[group]["command"], expected)
                 monitor.result(timeout=2)
         events.assert_any_call(status=status)
+        events.assert_any_call(message="設備狀態已改變或過期，請重新核對")
 
     def test_only_explicit_print_state_renews_control(self):
         serial = secrets.token_hex(6)
@@ -56,7 +57,7 @@ class ProtocolTest(unittest.TestCase):
             (142, {"gcode_state": "RUNNING"}, b"pause\n"),
             (172, {"mc_percent": 48}, b"stop\n"),
             (173, {"gcode_state": "RUNNING"}, b""),
-            (174, {"gcode_state": None}, b"stop\n"),
+            (174, {"gcode_state": None, "subtask_id": None}, b"stop\n"),
             (175, {"gcode_state": "PAUSE"}, b"stop\n"),
         ])
         clock = 100
@@ -89,6 +90,7 @@ class ProtocolTest(unittest.TestCase):
                     if "print" in payload:
                         publishes.append(payload["print"]["command"])
             self.assertEqual(publishes, ["pause", "stop"])
+            events.assert_any_call(status={"gcode_state": "—", "subtask_id": ""})
             messages = [call.kwargs["message"] for call in events.call_args_list if "message" in call.kwargs]
             self.assertEqual([msg.startswith("指令已送出") for msg in messages], [False, True, False, False, True])
 
